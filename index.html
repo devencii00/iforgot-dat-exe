@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>I forgot to study dat exe | Slideshow + Quiz</title>
+  <title>I forgot to study dat exe</title>
  <link rel="icon" type="image/x-icon" href="forgotexe.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap"
  rel="stylesheet">
@@ -91,7 +91,7 @@
   <div class="app-header">
     <div class="logo">
       <h1><i class="fas fa-book"></i> I forgot to study dat exe</h1>
-      <p style="font-size:0.7rem;">slideshow study | quiz with optional timer</p>
+      <p style="font-size:0.7rem;">LMAO you gon study last minute lol</p>
     </div>
     <div class="toolbar">
       <button id="createReviewerBtn" class="primary"><i class="fas fa-plus-circle"></i> New reviewer</button>
@@ -103,7 +103,7 @@
   <div id="reviewersContainer" class="reviewers-grid"></div>
 </div>
 
-<!-- Reviewer modal -->
+
 <div id="reviewerModal" class="modal-overlay">
   <div class="modal-card">
     <h2 id="modalTitle"><i class="fas fa-edit"></i> Create/Edit reviewer</h2>
@@ -126,7 +126,7 @@ Topic two content here"></textarea>
     </div>
   </div>
 </div>
-<!-- Quiz options modal -->
+
 <div id="quizOptionsModal" class="modal-overlay">
   <div class="modal-card">
     <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem;">
@@ -140,7 +140,7 @@ Topic two content here"></textarea>
     </p>
 
     <div style="display:flex; flex-direction:column; gap:0.8rem; margin-bottom:1.5rem;">
-      <!-- Option 1: Timer ON -->
+  
       <label id="timerOnLabel" style="display:flex; align-items:flex-start; gap:1rem; padding:1.2rem; border:2px solid #3b82f6; border-radius:1.5rem; cursor:pointer; background:#eff6ff; transition: 0.2s;">
         <input type="radio" name="timerOption" value="on" checked style="margin-top:4px; accent-color: #3b82f6;">
         <div style="flex: 1;">
@@ -149,7 +149,7 @@ Topic two content here"></textarea>
           </div>
           <div style="font-size:0.78rem; color:#3b82f6; margin-top:2px;">Anti-cheat mode — fixed time limit</div>
           
-          <!-- Integrated Timer duration input -->
+   
           <div id="timerDurationRow" style="display:flex; align-items:center; gap:0.5rem; margin-top: 1rem; background: rgba(255,255,255,0.6); padding: 0.5rem 0.8rem; border-radius: 1rem; border: 1px solid rgba(59,130,246,0.2); width: fit-content;">
             <input type="number" id="timerMinutes" min="0" max="180" value="1" style="width:50px; padding:0.3rem; border-radius:0.6rem; border:1px solid #cbd5e1; text-align:center; margin:0;">
             <span style="font-size:0.75rem; font-weight: 600; color:#1e40af;">m</span>
@@ -159,7 +159,7 @@ Topic two content here"></textarea>
         </div>
       </label>
 
-      <!-- Option 2: Timer OFF -->
+   
       <label id="timerOffLabel" style="display:flex; align-items:flex-start; gap:1rem; padding:1.2rem; border:1px solid #e2e8f0; border-radius:1.5rem; cursor:pointer; background:white; transition: 0.2s;">
         <input type="radio" name="timerOption" value="off" style="margin-top:4px; accent-color: #3b82f6;">
         <div style="flex: 1;">
@@ -183,7 +183,7 @@ Topic two content here"></textarea>
   let timerInterval = null;
   let pendingQuizReviewer = null;
 
-  // ── Self-contained confirm dialog (creates & destroys its own DOM) ────────
+
   function showConfirm(message, title) {
     return new Promise(resolve => {
       const overlay = document.createElement('div');
@@ -204,7 +204,7 @@ Topic two content here"></textarea>
     });
   }
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
+
   function escapeHtml(str) {
     return String(str || '').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
   }
@@ -213,7 +213,7 @@ Topic two content here"></textarea>
     return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(sec%60).padStart(2,'0');
   }
 
-  // ── Parsing ───────────────────────────────────────────────────────────────
+
   function parsePagesFromRaw(rawText) {
     const lines = rawText.split(/\r?\n/);
     const pages = [];
@@ -252,7 +252,7 @@ Topic two content here"></textarea>
     }, []);
   }
 
-  // ── Storage ───────────────────────────────────────────────────────────────
+
   function persist() {
     localStorage.setItem('forgot_study_rev_slides_v4', JSON.stringify(
       reviewers.map(r => ({ id: r.id, title: r.title, studyRawText: r.studyRawText, quizQuestions: r.quizQuestions }))
@@ -300,7 +300,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     renderReviewerList();
   }
 
-  // ── Reviewer list ─────────────────────────────────────────────────────────
+
   function renderReviewerList() {
     const c = document.getElementById('reviewersContainer');
     if (!reviewers.length) {
@@ -352,7 +352,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     }
   }
 
-  // ── Create/Edit modal ─────────────────────────────────────────────────────
+
   function openEditModal(id) {
     const r = reviewers.find(r => r.id === id);
     if (!r) return;
@@ -381,7 +381,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     document.getElementById('reviewerModal').classList.remove('active');
   }
 
-  // ── Slideshow ─────────────────────────────────────────────────────────────
+
   function startSlideshow(reviewerId) {
     const rev = reviewers.find(r => r.id === reviewerId);
     if (!rev) return;
@@ -390,7 +390,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
   }
 
   function buildSlideshowOverlay() {
-    // Remove any existing instance
+  
     document.getElementById('slideshowRoot')?.remove();
     if (!activeSlideshow) return;
 
@@ -426,7 +426,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
       </div>`;
     document.body.appendChild(overlay);
 
-    // Exit Study
+
     document.getElementById('ssExitBtn').addEventListener('click', async () => {
       if (await showConfirm('Exit study mode?', 'Exit Study')) {
         overlay.remove();
@@ -434,7 +434,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
       }
     });
 
-    // Prev
+
     document.getElementById('ssPrevBtn').addEventListener('click', () => {
       if (activeSlideshow && activeSlideshow.currentIndex > 0) {
         activeSlideshow.currentIndex--;
@@ -442,7 +442,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
       }
     });
 
-    // Next
+   
     document.getElementById('ssNextBtn').addEventListener('click', () => {
       if (activeSlideshow && activeSlideshow.currentIndex < pages.length - 1) {
         activeSlideshow.currentIndex++;
@@ -450,7 +450,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
       }
     });
 
-    // Dots
+
     overlay.querySelectorAll('.dot[data-i]').forEach(dot => {
       dot.addEventListener('click', () => {
         activeSlideshow.currentIndex = parseInt(dot.dataset.i);
@@ -458,21 +458,21 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
       });
     });
 
-    // Take Quiz — SEPARATE from exit, no shared state
+
     const quizBtn = document.getElementById('ssTakeQuizBtn');
     if (quizBtn) {
       quizBtn.addEventListener('click', async () => {
         if (await showConfirm('Ready to take the quiz?', 'Start Quiz')) {
-          const revId = activeSlideshow.reviewerId;   // capture before clearing
-          overlay.remove();                            // close slideshow
-          activeSlideshow = null;                      // clear state
-          launchQuizOptions(revId);                    // then open quiz
+          const revId = activeSlideshow.reviewerId;
+          overlay.remove();                            
+          activeSlideshow = null;                   
+          launchQuizOptions(revId);                 
         }
       });
     }
   }
 
-  // ── Quiz options modal ────────────────────────────────────────────────────
+
   function launchQuizOptions(reviewerId) {
     const rev = reviewers.find(r => r.id === reviewerId);
     if (!rev) return;
@@ -500,7 +500,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     startQuizEngine(rev, enableTimer, timeLimitSec);
   });
 
-  // Toggle timer duration row + label styles when radio changes
+
   document.querySelectorAll('input[name="timerOption"]').forEach(radio => {
     radio.addEventListener('change', () => {
       const isOn = document.querySelector('input[name="timerOption"]:checked').value === 'on';
@@ -517,7 +517,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     pendingQuizReviewer = null;
   });
 
-  // ── Quiz engine ───────────────────────────────────────────────────────────
+
   function startQuizEngine(reviewer, enableTimer, timeLimitSec) {
     showConfirm('Shuffle quiz questions?', 'Shuffle').then(shuffle => {
       let questions = [...reviewer.quizQuestions];
@@ -580,7 +580,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     overlay.innerHTML = html;
     document.body.appendChild(overlay);
 
-    // Wire radios
+ 
     quizSession.questions.forEach((_, i) => {
       overlay.querySelectorAll(`input[name="q${i}"]`).forEach(r => {
         r.addEventListener('change', e => { if (quizSession) quizSession.userAnswers[i] = e.target.value; });
@@ -638,7 +638,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     document.getElementById('closeResultsBtn').addEventListener('click', () => res.remove());
   }
 
-  // ── Export / Import ───────────────────────────────────────────────────────
+
   async function exportReviewer() {
     if (!reviewers.length) { await showConfirm('No reviewers to export.', 'Info'); return; }
     const list = reviewers.map((r,i) => `${i+1}. ${r.title}`).join('\n');
@@ -677,7 +677,6 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     input.click();
   }
 
-  // ── Static wiring ─────────────────────────────────────────────────────────
   document.getElementById('createReviewerBtn').addEventListener('click', () => {
     document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus"></i> Create reviewer';
     ['reviewerTitle','studyText','quizRawData'].forEach(id => document.getElementById(id).value = '');

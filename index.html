@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>I forgot to study dat exe | Slideshow + Quiz</title>
+  <title>I forgot to study dat exe | Slideshow + Quiz (MCQ/FILL/IDENT)</title>
   <link rel="icon" type="image/x-icon" href="forgotexe.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -41,7 +41,6 @@
     }
     .card-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; flex-wrap: wrap; }
     .badge { background: #e6f0ff; padding: 0.2rem 0.8rem; border-radius: 2rem; font-size: 0.7rem; font-weight: 600; }
-
     .modal-overlay {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
@@ -49,7 +48,7 @@
     }
     .modal-overlay.active { display: flex; }
     .modal-card {
-      background: white; max-width: 650px; width: 90%; border-radius: 2rem;
+      background: white; max-width: 700px; width: 90%; border-radius: 2rem;
       padding: 2rem; box-shadow: 0 25px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto;
     }
     .modal-card h2 { margin-bottom: 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.8rem; }
@@ -58,8 +57,10 @@
       font-family: inherit; margin: 0.5rem 0 1rem;
     }
     .modal-buttons { display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1rem; }
-    
-   
+    .quiz-question-tag { font-size: 0.7rem; background: #e2e8f0; border-radius: 1rem; padding: 0.2rem 0.6rem; margin-left: 0.5rem; }
+    .fill-input { width: 100%; padding: 0.6rem; border-radius: 0.8rem; border: 1px solid #cbd5e1; margin-top: 0.5rem; }
+    .identification-box { background: #f8fafc; border-left: 4px solid #3b82f6; padding: 0.8rem; border-radius: 1rem; margin: 0.5rem 0; }
+    .id-prompt { font-size: 0.75rem; color: #475569; margin-top: 0.5rem; }
     .export-selector-list {
       display: flex; flex-direction: column; gap: 0.75rem;
       margin: 1rem 0 1.5rem; max-height: 55vh; overflow-y: auto;
@@ -69,72 +70,37 @@
     .export-item {
       display: flex; align-items: center; gap: 1rem;
       padding: 0.8rem 1rem; background: white; border-radius: 1.2rem;
-      border: 1px solid #eef2ff; transition: all 0.1s;
-      cursor: pointer;
+      border: 1px solid #eef2ff; cursor: pointer;
     }
-    .export-item:hover { background: #f8fafc; border-color: #b9d0f0; }
-    .export-item.selected { background: #eff6ff; border-color: #3b82f6; box-shadow: 0 2px 8px rgba(59,130,246,0.1); }
-    .export-item input[type="checkbox"] {
-      width: 1.2rem; height: 1.2rem; margin: 0; cursor: pointer; accent-color: #3b82f6;
-    }
-    .export-item-info { flex: 1; }
-    .export-item-title { font-weight: 600; color: #0f172a; }
-    .export-item-meta { font-size: 0.7rem; color: #64748b; margin-top: 0.2rem; }
-    .select-all-bar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0.5rem 0; margin-bottom: 0.5rem; border-bottom: 1px dashed #cbd5e1;
-    }
-    .batch-actions { display: flex; gap: 0.8rem; margin-bottom: 1rem; }
-
+    .export-item.selected { background: #eff6ff; border-color: #3b82f6; }
+    .export-item input[type="checkbox"] { width: 1.2rem; height: 1.2rem; accent-color: #3b82f6; }
     .slideshow-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #f8fafc; z-index: 2000; display: flex; flex-direction: column;
       padding: 1.5rem; overflow-y: auto;
     }
-    .slideshow-header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-bottom: 1rem; border-bottom: 2px solid #e2e8f0; margin-bottom: 1.5rem; flex-wrap: wrap;
-    }
-    .slide-content {
-      background: white; border-radius: 2rem; padding: 2rem;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); margin: 1rem 0;
-      font-size: 1rem; line-height: 1.6;
-    }
-    .slide-content h4 { margin-bottom: 1rem; color: #1e293b; font-size: 1.2rem; }
-    .slide-content .content-body { white-space: pre-wrap; word-wrap: break-word; }
-    .slide-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem; }
-    .page-indicator { background: #eef2ff; padding: 0.5rem 1rem; border-radius: 2rem; font-weight: 500; }
-    .progress-dots { display: flex; justify-content: center; gap: 0.7rem; margin-top: 1rem; flex-wrap: wrap; }
-    .dot { width: 10px; height: 10px; background: #cbd5e1; border-radius: 50%; transition: all 0.2s; cursor: pointer; }
+    .slideshow-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+    .slide-content { background: white; border-radius: 2rem; padding: 2rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); margin: 1rem 0; }
+    .slide-nav { display: flex; justify-content: space-between; margin-top: 1rem; }
+    .progress-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem; }
+    .dot { width: 10px; height: 10px; background: #cbd5e1; border-radius: 50%; cursor: pointer; }
     .dot.active { background: #3b82f6; width: 24px; border-radius: 12px; }
-    .quiz-ready-section { margin-top: 1.5rem; text-align: center; }
-
     .result-question-card {
       background: white; border-radius: 1.5rem; padding: 1.5rem;
       margin-bottom: 1rem; border-left: 4px solid #cbd5e1;
     }
     .result-question-card.correct { border-left-color: #10b981; background: #f0fdf4; }
     .result-question-card.incorrect { border-left-color: #ef4444; background: #fef2f2; }
-    .result-option {
-      padding: 0.5rem 0.75rem; margin: 0.3rem 0; border-radius: 0.75rem;
-      display: flex; align-items: center; gap: 0.75rem;
-    }
-    .result-option.user-answer { background: #fef3c7; border: 1px solid #f59e0b; }
-    .result-option.correct-answer { background: #d1fae5; border: 1px solid #10b981; }
-    .result-option .status-icon { width: 1.5rem; text-align: center; }
-    .fa-check-circle { color: #10b981; }
-    .fa-times-circle { color: #ef4444; }
-    
+    .result-answer-detail { font-size: 0.8rem; color: #475569; margin-top: 0.5rem; }
     @media (max-width: 700px) { body { padding: 1rem; } .slide-content { padding: 1rem; } }
   </style>
 </head>
 <body>
-
 <div class="container">
   <div class="app-header">
     <div class="logo">
       <h1><i class="fas fa-book"></i> I forgot to study dat exe</h1>
-      <p style="font-size:0.7rem;">slideshow study | quiz with detailed results</p>
+      <p style="font-size:0.7rem;">MCQ | Fill-in-blank | Identification (multiple terms)</p>
     </div>
     <div class="toolbar">
       <button id="createReviewerBtn" class="primary"><i class="fas fa-plus-circle"></i> New reviewer</button>
@@ -146,23 +112,20 @@
   <div id="reviewersContainer" class="reviewers-grid"></div>
 </div>
 
-
+<!-- Reviewer Modal -->
 <div id="reviewerModal" class="modal-overlay">
   <div class="modal-card">
     <h2 id="modalTitle"><i class="fas fa-edit"></i> Create/Edit reviewer</h2>
     <label>Reviewer title</label>
     <input type="text" id="reviewerTitle" placeholder="e.g., Advanced Database">
-    <label>Study material ([TITLE] for cover, [PAGE X] for each slide)</label>
-    <textarea id="studyText" rows="8" placeholder="[TITLE]
-My Subject
-
-[PAGE 1]
-Topic one content here
-
-[PAGE 2]
-Topic two content here"></textarea>
-    <label>Quiz questions (Question | A | B | C | D | CorrectLetter)</label>
-    <textarea id="quizRawData" rows="5" placeholder="What is ACID? | Atomicity | Consistency | Isolation | Durability | A"></textarea>
+    <label>Study material ([TITLE] for cover, [PAGE X] for slides)</label>
+    <textarea id="studyText" rows="6" placeholder="[TITLE]\nMy Subject\n\n[PAGE 1]\nContent here"></textarea>
+    <label>Questions (Format: TYPE | data)</label>
+    <textarea id="quizRawData" rows="8" placeholder="MCQ | What is ACID? | Atomicity | Consistency | Isolation | Durability | A
+FILL | The property that ensures all-or-nothing execution is ______. | Atomicity
+IDENT | Name the four ACID properties. | Atomicity,Consistency,Isolation,Durability
+FILL | SQL join that returns all rows from left table: ______. | LEFT JOIN
+IDENT | List three types of SQL joins. | INNER JOIN,LEFT JOIN,RIGHT JOIN"></textarea>
     <div class="modal-buttons">
       <button id="cancelModalBtn">Cancel</button>
       <button id="saveReviewerBtn" class="primary">Save reviewer</button>
@@ -170,88 +133,103 @@ Topic two content here"></textarea>
   </div>
 </div>
 
-
 <div id="exportModal" class="modal-overlay">
-  <div class="modal-card" style="max-width: 620px;">
+  <div class="modal-card">
     <h2><i class="fas fa-file-export"></i> Export reviewers</h2>
-    <p style="color:#475569; margin-bottom: 1rem;">Select one or more reviewers to export as JSON files. Each reviewer will be saved individually, or you can bundle all selected into one archive.</p>
-    
-    <div class="select-all-bar">
-      <span style="font-weight: 500;"><i class="fas fa-list-check"></i> Select reviewers</span>
-      <div style="display: flex; gap: 0.8rem;">
-        <button id="selectAllExportBtn" class="btn" style="padding: 0.3rem 1rem; font-size: 0.75rem;"><i class="fas fa-check-double"></i> All</button>
-        <button id="clearAllExportBtn" class="btn" style="padding: 0.3rem 1rem; font-size: 0.75rem;"><i class="fas fa-times"></i> Clear</button>
-      </div>
-    </div>
-    
-    <div id="exportReviewerList" class="export-selector-list">
-     
-    </div>
-    
+    <div id="exportReviewerList" class="export-selector-list"></div>
     <div class="batch-actions">
-      <button id="exportSelectedBtn" class="primary" style="flex:1; justify-content: center;"><i class="fas fa-download"></i> Export Selected (individual files)</button>
-      <button id="exportBundleBtn" class="btn" style="flex:1; justify-content: center;"><i class="fas fa-folder-archive"></i> Export as Bundle (ZIP)</button>
+      <button id="exportSelectedBtn" class="primary">Export Selected (individual)</button>
+      <button id="exportBundleBtn" class="btn">Export as Bundle (JSON)</button>
     </div>
-    <p style="font-size: 0.7rem; color:#64748b; margin-top: 0.5rem; text-align: center;">
-      <i class="fas fa-info-circle"></i> Bundle creates one JSON file containing all selected reviewers. Individual exports download one JSON per reviewer.
-    </p>
-    <div class="modal-buttons">
-      <button id="closeExportModalBtn" class="btn">Close</button>
-    </div>
+    <div class="modal-buttons"><button id="closeExportModalBtn">Close</button></div>
   </div>
 </div>
 
+
 <div id="quizOptionsModal" class="modal-overlay">
   <div class="modal-card">
-    <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem;">
-      <div style="background: #eff6ff; color: #3b82f6; padding: 0.6rem; border-radius: 1rem;">
-        <i class="fas fa-hourglass-half"></i>
+    <h2><i class="fas fa-hourglass-half"></i> Quiz settings</h2>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <label style="display:flex;gap:1rem;"><input type="radio" name="timerOption" value="on" checked> Enable timer</label>
+      <div id="timerDurationRow" style="margin-left:2rem;">
+        <input type="number" id="timerMinutes" value="1" style="width:70px;"> min
+        <input type="number" id="timerSeconds" value="30" style="width:70px;"> sec
       </div>
-      <h2 style="margin: 0;">Quiz settings</h2>
+      <label><input type="radio" name="timerOption" value="off"> No timer</label>
     </div>
-    <p style="color:#64748b; font-size:0.85rem; margin-bottom:1.5rem; margin-left: 3.2rem;">
-      Configure timer and shuffle options.
-    </p>
-    
-    <div style="display:flex; flex-direction:column; gap:0.8rem; margin-bottom:1.5rem;">
-      <label id="timerOnLabel" style="display:flex; align-items:flex-start; gap:1rem; padding:1.2rem; border:2px solid #3b82f6; border-radius:1.5rem; cursor:pointer; background:#eff6ff;">
-        <input type="radio" name="timerOption" value="on" checked style="margin-top:4px; accent-color: #3b82f6;">
-        <div style="flex: 1;">
-          <div style="font-weight:600; color:#1e40af; display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-clock"></i> Enable timer</div>
-          <div style="font-size:0.78rem; color:#3b82f6; margin-top:2px;">Anti-cheat mode — fixed time limit</div>
-          <div id="timerDurationRow" style="display:flex; align-items:center; gap:0.5rem; margin-top: 1rem; background: rgba(255,255,255,0.6); padding: 0.5rem 0.8rem; border-radius: 1rem; border: 1px solid rgba(59,130,246,0.2); width: fit-content;">
-            <input type="number" id="timerMinutes" min="0" max="180" value="1" style="width:55px; padding:0.3rem; border-radius:0.6rem; border:1px solid #cbd5e1; text-align:center;">
-            <span>min</span>
-            <input type="number" id="timerSeconds" min="0" max="59" value="30" style="width:55px; padding:0.3rem; border-radius:0.6rem; border:1px solid #cbd5e1; text-align:center;">
-            <span>sec</span>
-          </div>
-        </div>
-      </label>
-      <label id="timerOffLabel" style="display:flex; align-items:flex-start; gap:1rem; padding:1.2rem; border:1px solid #e2e8f0; border-radius:1.5rem; cursor:pointer; background:white;">
-        <input type="radio" name="timerOption" value="off" style="margin-top:4px; accent-color: #3b82f6;">
-        <div style="flex: 1;">
-          <div style="font-weight:600; color:#1e293b;"><i class="fas fa-infinity"></i> No timer</div>
-          <div style="font-size:0.78rem; color:#64748b; margin-top:2px;">Relaxed mode — take as long as you need</div>
-        </div>
-      </label>
+    <div style="margin:1rem 0;">
+      <button id="shuffleYesBtn" class="primary">Shuffle Questions</button>
+      <button id="shuffleNoBtn" class="btn">Do not shuffle</button>
     </div>
-
-    <div style="margin: 1rem 0 1.5rem 0; padding-top: 0.5rem; border-top: 1px solid #e2e8f0;">
-      <div style="font-weight: 600; margin-bottom: 0.8rem; color: #1e293b;"><i class="fas fa-random"></i> Shuffle Questions</div>
-      <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-        <button id="shuffleYesBtn" class="btn primary" style="flex:1; justify-content: center;"><i class="fas fa-random"></i> Shuffle Questions</button>
-        <button id="shuffleNoBtn" class="btn" style="flex:1; justify-content: center;"><i class="fas fa-ban"></i> Do not shuffle</button>
-      </div>
-      <p style="font-size:0.7rem; color:#64748b; margin-top: 0.5rem;">Choose whether to randomize question order</p>
-    </div>
-
-    <div class="modal-buttons">
-      <button id="cancelQuizOptBtn" class="btn">Cancel</button>
-    </div>
+    <div class="modal-buttons"><button id="cancelQuizOptBtn">Cancel</button></div>
   </div>
 </div>
 
 <script>
+ 
+  function parseUnifiedQuestions(rawText) {
+    const lines = rawText.split(/\r?\n/);
+    const questions = [];
+    for (let line of lines) {
+      line = line.trim();
+      if (!line) continue;
+      const parts = line.split('|').map(s => s.trim());
+      if (parts.length < 2) continue;
+      const typeCode = parts[0].toUpperCase();
+      if (typeCode === 'MCQ' && parts.length >= 7) {
+        questions.push({
+          type: 'MCQ',
+          text: parts[1],
+          options: [parts[2], parts[3], parts[4], parts[5]],
+          correctLetter: parts[6].toUpperCase().slice(0,1)
+        });
+      } else if (typeCode === 'FILL' && parts.length >= 3) {
+        questions.push({
+          type: 'FILL',
+          text: parts[1],
+          correctAnswer: parts[2],
+          normalizedAnswer: parts[2].toLowerCase().replace(/[^\w\s]/g, '')
+        });
+      } else if (typeCode === 'IDENT' && parts.length >= 3) {
+        const expectedList = parts[2].split(',').map(s => s.trim()).filter(s => s);
+        questions.push({
+          type: 'IDENT',
+          text: parts[1],
+          expectedAnswers: expectedList,
+          normalizedAnswers: expectedList.map(a => a.toLowerCase().replace(/[^\w\s]/g, ''))
+        });
+      }
+    }
+    return questions;
+  }
+
+  function questionsToRawText(questions) {
+    return questions.map(q => {
+      if (q.type === 'MCQ') return `MCQ | ${q.text} | ${q.options.join(' | ')} | ${q.correctLetter}`;
+      if (q.type === 'FILL') return `FILL | ${q.text} | ${q.correctAnswer}`;
+      if (q.type === 'IDENT') return `IDENT | ${q.text} | ${q.expectedAnswers.join(',')}`;
+      return '';
+    }).join('\n');
+  }
+
+  function isFillCorrect(userAnswer, correctAnswer) {
+    if (!userAnswer) return false;
+    const normUser = userAnswer.trim().toLowerCase().replace(/[^\w\s]/g, '');
+    const normCorrect = correctAnswer.toLowerCase().replace(/[^\w\s]/g, '');
+    return normUser === normCorrect;
+  }
+
+  function isIdentificationCorrect(userRaw, expectedList, normalizedExpected) {
+    if (!userRaw) return false;
+    let userTerms = userRaw.split(/[,]+/).map(s => s.trim().toLowerCase().replace(/[^\w\s]/g, '')).filter(t => t);
+    const neededSet = new Set(normalizedExpected);
+    let matched = 0;
+    for (let term of userTerms) {
+      if (neededSet.has(term)) matched++;
+    }
+    return matched === neededSet.size;
+  }
+
   let reviewers = [];
   let activeSlideshow = null;
   let quizSession = null;
@@ -259,32 +237,26 @@ Topic two content here"></textarea>
   let pendingQuizReviewer = null;
   let pendingShuffleChoice = null;
 
+  function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 6); }
+  function escapeHtml(str) { return String(str || '').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+  function formatTime(sec) { return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(sec%60).padStart(2,'0'); }
+  
   function showConfirm(message, title) {
     return new Promise(resolve => {
       const overlay = document.createElement('div');
       overlay.className = 'modal-overlay active';
       overlay.style.zIndex = '9999';
-      overlay.innerHTML = `
-        <div class="modal-card">
-          <h2><i class="fas fa-question-circle"></i> ${escapeHtml(title || 'Confirm')}</h2>
-          <p>${message}</p>
-          <div class="modal-buttons" style="justify-content:center;">
-            <button class="c-no">Cancel</button>
-            <button class="c-yes primary">Yes</button>
-          </div>
-        </div>`;
+      overlay.innerHTML = `<div class="modal-card"><h2><i class="fas fa-question-circle"></i> ${escapeHtml(title || 'Confirm')}</h2><p>${message}</p><div class="modal-buttons"><button class="c-no">Cancel</button><button class="c-yes primary">Yes</button></div></div>`;
       document.body.appendChild(overlay);
       overlay.querySelector('.c-yes').onclick = () => { overlay.remove(); resolve(true); };
-      overlay.querySelector('.c-no').onclick  = () => { overlay.remove(); resolve(false); };
+      overlay.querySelector('.c-no').onclick = () => { overlay.remove(); resolve(false); };
     });
   }
 
-  function escapeHtml(str) {
-    return String(str || '').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
-  }
-  function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 6); }
-  function formatTime(sec) {
-    return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(sec%60).padStart(2,'0');
+  function persist() {
+    localStorage.setItem('forgot_study_rev_v7', JSON.stringify(reviewers.map(r => ({
+      id: r.id, title: r.title, studyRawText: r.studyRawText, quizQuestionsRaw: questionsToRawText(r.quizQuestions)
+    }))));
   }
 
   function parsePagesFromRaw(rawText) {
@@ -292,17 +264,19 @@ Topic two content here"></textarea>
     const pages = [];
     let cur = null, buf = [];
     const TITLE = /^\[TITLE\]\s*$/i;
-    const PAGE  = /^\[PAGE\s+(\d+)\]\s*$/i;
+    const PAGE = /^\[PAGE\s+(\d+)\]\s*$/i;
     for (const line of lines) {
       const t = line.trim();
       if (TITLE.test(t)) {
         if (cur) pages.push({ title: cur.title, content: buf.join('\n').trim() });
-        cur = { title: 'Cover' }; buf = [];
+        cur = { title: 'Cover' };
+        buf = [];
       } else if (PAGE.test(t)) {
         if (cur) pages.push({ title: cur.title, content: buf.join('\n').trim() });
-        cur = { title: 'Page ' + t.match(PAGE)[1] }; buf = [];
+        cur = { title: 'Page ' + t.match(PAGE)[1] };
+        buf = [];
       } else {
-        if (!cur && t) { cur = { title: 'Cover' }; }
+        if (!cur && t) cur = { title: 'Cover' };
         if (cur) buf.push(line);
       }
     }
@@ -311,60 +285,45 @@ Topic two content here"></textarea>
     return pages;
   }
 
-  function parseQuizQuestions(raw) {
-    return raw.split(/\r?\n/).reduce((acc, line) => {
-      line = line.trim();
-      if (!line) return acc;
-      const p = line.split('|').map(s => s.trim());
-      if (p.length >= 6) {
-        let c = p[5].toUpperCase();
-        if (!['A','B','C','D'].includes(c)) c = 'A';
-        acc.push({ text: p[0], options: [p[1], p[2], p[3], p[4]], correctLetter: c });
-      }
-      return acc;
-    }, []);
-  }
-
-  function persist() {
-    localStorage.setItem('forgot_study_rev_slides_v6', JSON.stringify(
-      reviewers.map(r => ({ id: r.id, title: r.title, studyRawText: r.studyRawText, quizQuestions: r.quizQuestions }))
-    ));
-  }
-
   function loadReviewers() {
     try {
-      const stored = localStorage.getItem('forgot_study_rev_slides_v6');
-      if (stored) reviewers = JSON.parse(stored).map(r => ({ ...r, parsedPages: parsePagesFromRaw(r.studyRawText) }));
+      const stored = localStorage.getItem('forgot_study_rev_v7');
+      if (stored) {
+        reviewers = JSON.parse(stored).map(r => ({
+          ...r,
+          quizQuestions: parseUnifiedQuestions(r.quizQuestionsRaw),
+          parsedPages: parsePagesFromRaw(r.studyRawText)
+        }));
+      }
     } catch(e) { reviewers = []; }
-
+    
     if (!reviewers.length) {
       const demoRaw = `[TITLE]
 Database Systems Crash Course
 
 [PAGE 1]
-Database Transactions - ACID Properties
-
-Atomicity: All or nothing - transaction completes fully or not at all
-Consistency: Database remains in valid state
-Isolation: Concurrent transactions don't interfere
-Durability: Committed changes persist
+ACID Properties: Atomicity, Consistency, Isolation, Durability
+Fill-in: The property that ensures all-or-nothing execution: ______.
 
 [PAGE 2]
-SQL Joins Overview
-
-INNER JOIN: Returns only matching rows from both tables
-LEFT JOIN: Returns all rows from left table, matching from right
-RIGHT JOIN: Returns all rows from right table, matching from left
+SQL Joins: INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN.
+Identification: Name three types of SQL joins.
 
 [PAGE 3]
-Quick Recap
-
-ACID ensures data integrity
-Joins combine tables based on relationships`;
-      const demoQuiz = `What does ACID stand for? | Atomicity,Consistency,Isolation,Durability | Accuracy,Control,Isolation,Durability | Atomic,Copy,Index,Data | None | A
-Which join returns all records from left table? | INNER JOIN | LEFT JOIN | RIGHT JOIN | FULL JOIN | B
-What ensures all or nothing execution? | Atomicity | Consistency | Isolation | Durability | A`;
-      reviewers.push({ id: genId(), title: 'Database Systems Crash', studyRawText: demoRaw, quizQuestions: parseQuizQuestions(demoQuiz), parsedPages: parsePagesFromRaw(demoRaw) });
+Normalization and Transactions.`;
+      const demoQuizRaw = `MCQ | What does ACID stand for? | Atomicity,Consistency,Isolation,Durability | Accuracy,Control,Isolation,Durability | Atomic,Copy,Index,Data | None | A
+FILL | The property that ensures all-or-nothing execution is ______. | Atomicity
+FILL | SQL join that returns all rows from left table: ______. | LEFT JOIN
+IDENT | Name the four ACID properties. | Atomicity,Consistency,Isolation,Durability
+IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
+      reviewers.push({
+        id: genId(),
+        title: 'Database + SQL Advanced',
+        studyRawText: demoRaw,
+        quizQuestionsRaw: demoQuizRaw,
+        quizQuestions: parseUnifiedQuestions(demoQuizRaw),
+        parsedPages: parsePagesFromRaw(demoRaw)
+      });
       persist();
     }
     renderReviewerList();
@@ -373,128 +332,30 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
   function renderReviewerList() {
     const c = document.getElementById('reviewersContainer');
     if (!reviewers.length) {
-      c.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><i class="fas fa-folder-open"></i> No reviewers yet — click "New reviewer"</div>';
+      c.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><i class="fas fa-folder-open"></i> No reviewers — click "New reviewer"</div>';
       return;
     }
     c.innerHTML = reviewers.map(r => `
       <div class="reviewer-card">
-        <h3><i class="fas fa-graduation-cap"></i> ${escapeHtml(r.title)}
-          <span class="badge"><i class="fas fa-question"></i> ${r.quizQuestions.length} Q's</span>
-        </h3>
+        <h3><i class="fas fa-graduation-cap"></i> ${escapeHtml(r.title)} <span class="badge"><i class="fas fa-question"></i> ${r.quizQuestions.length} Q's</span></h3>
         <div class="card-actions">
-          <button class="btn" data-action="study" data-id="${r.id}"><i class="fas fa-chalkboard-user"></i> Open &amp; Study</button>
-          <button class="btn primary" data-action="quiz"  data-id="${r.id}"><i class="fas fa-pen-to-square"></i> Take Quiz</button>
-          <button class="btn" data-action="edit"  data-id="${r.id}"><i class="fas fa-pencil-alt"></i> Edit</button>
-          <button class="btn" data-action="del"   data-id="${r.id}"><i class="fas fa-trash-alt"></i> Delete</button>
-        </div>
-      </div>`).join('');
-
-    c.querySelectorAll('button[data-action]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.dataset.id;
-        const action = btn.dataset.action;
-        if (action === 'study') startSlideshow(id);
-        if (action === 'quiz')  confirmQuizFromDashboard(id);
-        if (action === 'edit')  openEditModal(id);
-        if (action === 'del')   confirmDelete(id);
-      });
-    });
-  }
-
-
-  function openExportModal() {
-    if (!reviewers.length) {
-      showConfirm('No reviewers to export. Create one first.', 'No data');
-      return;
-    }
-    const exportModal = document.getElementById('exportModal');
-    const container = document.getElementById('exportReviewerList');
-  
-    container.innerHTML = reviewers.map(rev => `
-      <div class="export-item" data-id="${rev.id}">
-        <input type="checkbox" class="export-checkbox" value="${rev.id}" id="chk_${rev.id}">
-        <div class="export-item-info">
-          <div class="export-item-title">${escapeHtml(rev.title)}</div>
-          <div class="export-item-meta"><i class="fas fa-question-circle"></i> ${rev.quizQuestions.length} questions | <i class="fas fa-layer-group"></i> ${parsePagesFromRaw(rev.studyRawText).length} slides</div>
+          <button class="btn" data-action="study" data-id="${r.id}"><i class="fas fa-chalkboard-user"></i> Open Study</button>
+          <button class="btn primary" data-action="quiz" data-id="${r.id}"><i class="fas fa-pen-to-square"></i> Take Quiz</button>
+          <button class="btn" data-action="edit" data-id="${r.id}"><i class="fas fa-pencil-alt"></i> Edit</button>
+          <button class="btn" data-action="del" data-id="${r.id}"><i class="fas fa-trash-alt"></i> Delete</button>
         </div>
       </div>
     `).join('');
-   
-    container.querySelectorAll('.export-item').forEach(row => {
-      const chk = row.querySelector('.export-checkbox');
-      row.addEventListener('click', (e) => {
-        if (e.target !== chk) chk.checked = !chk.checked;
-        row.classList.toggle('selected', chk.checked);
+    c.querySelectorAll('button[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id, action = btn.dataset.action;
+        if (action === 'study') startSlideshow(id);
+        if (action === 'quiz') confirmQuizFromDashboard(id);
+        if (action === 'edit') openEditModal(id);
+        if (action === 'del') confirmDelete(id);
       });
-      chk.addEventListener('change', () => row.classList.toggle('selected', chk.checked));
     });
-    exportModal.classList.add('active');
   }
-
-  function getSelectedReviewerIds() {
-    const checkboxes = document.querySelectorAll('#exportReviewerList .export-checkbox:checked');
-    return Array.from(checkboxes).map(cb => cb.value);
-  }
-
- 
-  function exportSelectedIndividual() {
-    const ids = getSelectedReviewerIds();
-    if (ids.length === 0) {
-      showConfirm('Please select at least one reviewer to export.', 'No selection');
-      return;
-    }
-    const toExport = reviewers.filter(r => ids.includes(r.id));
-    for (const rev of toExport) {
-      const exportData = {
-        type: 'forgot_study_slideshow',
-        version: '2.0',
-        reviewer: {
-          id: rev.id,
-          title: rev.title,
-          studyRawText: rev.studyRawText,
-          quizQuestions: rev.quizQuestions
-        }
-      };
-      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `${rev.title.replace(/[^a-z0-9]/gi, '_')}.json`;
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-    showConfirm(`Exported ${toExport.length} reviewer(s) as individual files.`, 'Export Complete');
-    document.getElementById('exportModal').classList.remove('active');
-  }
-
-
-  function exportAsBundle() {
-    const ids = getSelectedReviewerIds();
-    if (ids.length === 0) {
-      showConfirm('Please select at least one reviewer to bundle.', 'No selection');
-      return;
-    }
-    const toExport = reviewers.filter(r => ids.includes(r.id));
-    const bundleData = {
-      type: 'forgot_study_slideshow_bundle',
-      version: '2.0',
-      exportedAt: new Date().toISOString(),
-      reviewers: toExport.map(r => ({
-        id: r.id,
-        title: r.title,
-        studyRawText: r.studyRawText,
-        quizQuestions: r.quizQuestions
-      }))
-    };
-    const blob = new Blob([JSON.stringify(bundleData, null, 2)], { type: 'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `reviewers_bundle_${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-    showConfirm(`Exported ${toExport.length} reviewer(s) as a single bundle.`, 'Bundle Created');
-    document.getElementById('exportModal').classList.remove('active');
-  }
-
 
   async function confirmDelete(id) {
     if (await showConfirm('Delete this reviewer permanently?', 'Delete reviewer')) {
@@ -511,7 +372,7 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
       await showConfirm('This reviewer has no quiz questions! Add some via Edit.', 'No Questions');
       return;
     }
-    if (await showConfirm(`Did you already study "<strong>${escapeHtml(rev.title)}</strong>"?<br><span style="font-size:0.82rem;color:#64748b;">Make sure you've reviewed the material before taking the quiz!</span>`, 'Ready for the Quiz?')) {
+    if (await showConfirm(`Ready for "<strong>${escapeHtml(rev.title)}</strong>" quiz?`, 'Start Quiz')) {
       launchQuizOptions(id);
     }
   }
@@ -521,9 +382,9 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     if (!r) return;
     document.getElementById('reviewerTitle').value = r.title;
     document.getElementById('studyText').value = r.studyRawText;
-    document.getElementById('quizRawData').value = r.quizQuestions.map(q => `${q.text} | ${q.options.join(' | ')} | ${q.correctLetter}`).join('\n');
-    document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit reviewer';
+    document.getElementById('quizRawData').value = questionsToRawText(r.quizQuestions);
     window._editId = id;
+    document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit reviewer';
     document.getElementById('reviewerModal').classList.add('active');
   }
 
@@ -531,86 +392,319 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     const title = document.getElementById('reviewerTitle').value.trim();
     if (!title) { showConfirm('Title is required.', 'Error'); return; }
     const rawText = document.getElementById('studyText').value;
-    const parsedQ = parseQuizQuestions(document.getElementById('quizRawData').value);
+    const rawQuiz = document.getElementById('quizRawData').value;
+    const parsedQ = parseUnifiedQuestions(rawQuiz);
     if (window._editId) {
       const i = reviewers.findIndex(r => r.id === window._editId);
-      if (i !== -1) reviewers[i] = { ...reviewers[i], title, studyRawText: rawText, quizQuestions: parsedQ, parsedPages: parsePagesFromRaw(rawText) };
+      if (i !== -1) {
+        reviewers[i] = { ...reviewers[i], title, studyRawText: rawText, quizQuestions: parsedQ, quizQuestionsRaw: rawQuiz, parsedPages: parsePagesFromRaw(rawText) };
+      }
       delete window._editId;
     } else {
-      reviewers.push({ id: genId(), title, studyRawText: rawText, quizQuestions: parsedQ, parsedPages: parsePagesFromRaw(rawText) });
+      reviewers.push({ id: genId(), title, studyRawText: rawText, quizQuestions: parsedQ, quizQuestionsRaw: rawQuiz, parsedPages: parsePagesFromRaw(rawText) });
     }
     persist();
     renderReviewerList();
     document.getElementById('reviewerModal').classList.remove('active');
   }
 
+ 
   function startSlideshow(reviewerId) {
     const rev = reviewers.find(r => r.id === reviewerId);
     if (!rev) return;
     activeSlideshow = { reviewerId: rev.id, pages: parsePagesFromRaw(rev.studyRawText), currentIndex: 0 };
     buildSlideshowOverlay();
   }
-  function buildSlideshowOverlay() { 
+
+  function buildSlideshowOverlay() {
     if (!activeSlideshow) return;
     const rev = reviewers.find(r => r.id === activeSlideshow.reviewerId);
     const pages = activeSlideshow.pages;
     const idx = activeSlideshow.currentIndex;
     const page = pages[idx];
     const total = pages.length;
-    const isLast = idx === total - 1;
     const overlay = document.createElement('div');
-    overlay.id = 'slideshowRoot';
     overlay.className = 'slideshow-overlay';
-    overlay.innerHTML = `<div class="slideshow-header"><h3><i class="fas fa-book-reader"></i> ${escapeHtml(rev.title)}</h3><button id="ssExitBtn" class="btn"><i class="fas fa-times"></i> Exit Study</button></div><span class="page-indicator"><i class="fas fa-map-pin"></i> ${idx+1}/${total}</span><div class="slide-content"><h4><i class="fas fa-file-alt"></i> ${escapeHtml(page.title)}</h4><div class="content-body">${escapeHtml(page.content).replace(/\n/g,'<br>')}</div></div><div class="slide-nav"><button id="ssPrevBtn" ${idx===0?'disabled style="opacity:0.5"':''}><i class="fas fa-arrow-left"></i> Previous</button><button id="ssNextBtn" ${isLast?'disabled style="opacity:0.5"':''}>Next <i class="fas fa-arrow-right"></i></button></div><div class="progress-dots" id="ssDots">${pages.map((_,i)=>`<div class="dot${i===idx?' active':''}" data-i="${i}"></div>`).join('')}</div>${isLast ? '<div class="quiz-ready-section"><button id="ssTakeQuizBtn" class="primary"><i class="fas fa-check-circle"></i> Take Quiz</button></div>' : ''}`;
+    overlay.id = 'slideshowRoot';
+    overlay.innerHTML = `
+      <div class="slideshow-header">
+        <h3><i class="fas fa-book-reader"></i> ${escapeHtml(rev.title)}</h3>
+        <button id="ssExitBtn" class="btn"><i class="fas fa-times"></i> Exit Study</button>
+      </div>
+      <span class="page-indicator">${idx+1}/${total}</span>
+      <div class="slide-content">
+        <h4>${escapeHtml(page.title)}</h4>
+        <div class="content-body">${escapeHtml(page.content).replace(/\n/g,'<br>')}</div>
+      </div>
+      <div class="slide-nav">
+        <button id="ssPrevBtn" ${idx===0?'disabled':''}>Previous</button>
+        <button id="ssNextBtn" ${idx===total-1?'disabled':''}>Next</button>
+      </div>
+      <div class="progress-dots">
+        ${pages.map((_,i) => `<div class="dot${i===idx?' active':''}" data-i="${i}"></div>`).join('')}
+      </div>
+      ${idx===total-1 ? '<div style="margin-top:1rem;"><button id="ssTakeQuizBtn" class="primary">Take Quiz</button></div>' : ''}
+    `;
     document.body.appendChild(overlay);
-    attachSlideEvents(overlay, pages.length);
+    document.getElementById('ssExitBtn').onclick = async () => {
+      if (await showConfirm('Exit study?', 'Exit')) { overlay.remove(); activeSlideshow = null; }
+    };
+    document.getElementById('ssPrevBtn').onclick = () => {
+      if (activeSlideshow.currentIndex > 0) { activeSlideshow.currentIndex--; overlay.remove(); buildSlideshowOverlay(); }
+    };
+    document.getElementById('ssNextBtn').onclick = () => {
+      if (activeSlideshow.currentIndex < total-1) { activeSlideshow.currentIndex++; overlay.remove(); buildSlideshowOverlay(); }
+    };
+    document.querySelectorAll('.dot[data-i]').forEach(d => {
+      d.onclick = () => { activeSlideshow.currentIndex = parseInt(d.dataset.i); overlay.remove(); buildSlideshowOverlay(); };
+    });
+    if (document.getElementById('ssTakeQuizBtn')) {
+      document.getElementById('ssTakeQuizBtn').onclick = async () => {
+        if (await showConfirm('Ready to take quiz?', 'Start Quiz')) {
+          const rid = activeSlideshow.reviewerId;
+          overlay.remove();
+          activeSlideshow = null;
+          launchQuizOptions(rid);
+        }
+      };
+    }
   }
-  function attachSlideEvents(overlay, totalPages) { /* placeholder to avoid var undefined */ 
-    overlay.querySelector('#ssExitBtn')?.addEventListener('click', async () => {
-  if(!(await showConfirm('Exit and return to dashboard?', 'Exit Study'))) return;
 
-  // kill slideshow state
-  activeSlideshow = null;
-
-  // remove ALL possible study/quiz overlays (hard reset)
-  document.querySelectorAll('.slideshow-overlay, #quizOverlay').forEach(el => el.remove());
-
-  // clear timers if any are running
-  if (typeof timerInterval !== 'undefined' && timerInterval) {
-    clearInterval(timerInterval);
-    timerInterval = null;
+  function launchQuizOptions(reviewerId) {
+    const rev = reviewers.find(r => r.id === reviewerId);
+    if (!rev || !rev.quizQuestions.length) return;
+    pendingQuizReviewer = rev;
+    pendingShuffleChoice = null;
+    document.getElementById('quizOptionsModal').classList.add('active');
   }
 
-  quizSession = null;
-  pendingQuizReviewer = null;
-  pendingShuffleChoice = null;
-});
-    overlay.querySelector('#ssPrevBtn')?.addEventListener('click',()=>{if(activeSlideshow.currentIndex>0)activeSlideshow.currentIndex--,buildSlideshowOverlay();});
-    overlay.querySelector('#ssNextBtn')?.addEventListener('click',()=>{if(activeSlideshow.currentIndex<totalPages-1)activeSlideshow.currentIndex++,buildSlideshowOverlay();});
-    overlay.querySelectorAll('.dot[data-i]').forEach(d=>d.addEventListener('click',()=>{activeSlideshow.currentIndex=parseInt(d.dataset.i);buildSlideshowOverlay();}));
-    overlay.querySelector('#ssTakeQuizBtn')?.addEventListener('click', async()=>{if(await showConfirm('Ready to take quiz?','Start Quiz')){const rid=activeSlideshow.reviewerId; overlay.remove(); activeSlideshow=null; launchQuizOptions(rid);}});
+  function startQuizWithCurrentSettings() {
+    if (!pendingQuizReviewer || pendingShuffleChoice === null) {
+      showConfirm('Select shuffle option', 'Required');
+      return;
+    }
+    const enableTimer = document.querySelector('input[name="timerOption"]:checked').value === 'on';
+    let timeLimitSec = null;
+    if (enableTimer) {
+      const mins = Math.max(0, parseInt(document.getElementById('timerMinutes').value) || 0);
+      const secs = Math.max(0, Math.min(59, parseInt(document.getElementById('timerSeconds').value) || 0));
+      timeLimitSec = mins * 60 + secs;
+      if (timeLimitSec < 5) { showConfirm('Timer at least 5 seconds', 'Invalid'); return; }
+    }
+    document.getElementById('quizOptionsModal').classList.remove('active');
+    let questions = [...pendingQuizReviewer.quizQuestions];
+    if (pendingShuffleChoice) {
+      for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+      }
+    }
+    quizSession = {
+      questions,
+      userAnswers: new Array(questions.length).fill(null),
+      userRawAnswers: new Array(questions.length).fill(''),
+      timeLimit: enableTimer ? timeLimitSec : null,
+      startTime: Date.now(),
+      enableTimer
+    };
+    buildUnifiedQuizOverlay();
+    if (enableTimer) startQuizTimer();
   }
-  function launchQuizOptions(reviewerId){const rev=reviewers.find(r=>r.id===reviewerId); if(!rev||!rev.quizQuestions.length) return; pendingQuizReviewer=rev; pendingShuffleChoice=null; document.getElementById('quizOptionsModal').classList.add('active');}
-  function startQuizWithCurrentSettings(){if(!pendingQuizReviewer||pendingShuffleChoice===null){showConfirm('Select shuffle option','Required');return;}const enableTimer=document.querySelector('input[name="timerOption"]:checked').value==='on'; let timeLimitSec=null; if(enableTimer){const mins=Math.max(0,parseInt(document.getElementById('timerMinutes').value)||0); const secs=Math.max(0,Math.min(59,parseInt(document.getElementById('timerSeconds').value)||0)); timeLimitSec=mins*60+secs;if(timeLimitSec<5){showConfirm('Timer at least 5 seconds','Invalid');return;}}document.getElementById('quizOptionsModal').classList.remove('active'); const rev=pendingQuizReviewer; const shouldShuffle=pendingShuffleChoice; let questions=[...rev.quizQuestions]; if(shouldShuffle){for(let i=questions.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[questions[i],questions[j]]=[questions[j],questions[i]];}} quizSession={questions,userAnswers:new Array(questions.length).fill(null),timeLimit:enableTimer?timeLimitSec:null,startTime:Date.now(),enableTimer}; buildQuizOverlay(); if(enableTimer)startQuizTimer();}
-  function buildQuizOverlay(){/*prior version*/} function startQuizTimer(){/* prior*/} function evaluateAndShowResults(){/* prior*/}
-  function buildQuizOverlay() { if(!quizSession) return; const overlay=document.createElement('div'); overlay.id='quizOverlay'; overlay.className='slideshow-overlay'; let html=`<div class="slideshow-header"><h3><i class="fas fa-clock"></i> Quiz ${quizSession.enableTimer?'<span id="quizTimer">--:--</span>':'<i class="fas fa-infinity"></i> no timer'}</h3><button id="qzExitBtn" class="btn"><i class="fas fa-times"></i> Exit Quiz</button></div><div id="qzScroll" style="max-height:70vh;overflow-y:auto;">`; quizSession.questions.forEach((q,idx)=>{html+=`<div class="slide-content"><strong><i class="fas fa-question-circle"></i> ${idx+1}. ${escapeHtml(q.text)}</strong><div>`; q.options.forEach((opt,oi)=>{const letter=String.fromCharCode(65+oi); html+=`<label style="display:flex;gap:0.5rem;"><input type="radio" name="q${idx}" value="${letter}" ${quizSession.userAnswers[idx]===letter?'checked':''}> <strong>${letter}.</strong> ${escapeHtml(opt)}</label>`;}); html+=`</div></div>`;}); html+=`<div style="margin:1rem"><button id="qzSubmitBtn" class="primary">Submit Quiz</button></div></div>`; overlay.innerHTML=html; document.body.appendChild(overlay); quizSession.questions.forEach((_,i)=>{overlay.querySelectorAll(`input[name="q${i}"]`).forEach(r=>{r.addEventListener('change',e=>{if(quizSession)quizSession.userAnswers[i]=e.target.value;});});}); overlay.querySelector('#qzExitBtn').addEventListener('click',async()=>{if(await showConfirm('Exit quiz?','Exit Quiz')){if(timerInterval)clearInterval(timerInterval);quizSession=null;overlay.remove();}}); overlay.querySelector('#qzSubmitBtn').addEventListener('click',evaluateAndShowResults);}
-  function startQuizTimer(){if(timerInterval)clearInterval(timerInterval); timerInterval=setInterval(()=>{if(!quizSession){clearInterval(timerInterval);return;} const elapsed=Math.floor((Date.now()-quizSession.startTime)/1000); const remaining=Math.max(0,quizSession.timeLimit-elapsed); const el=document.getElementById('quizTimer'); if(el)el.innerText=formatTime(remaining); if(remaining<=0){clearInterval(timerInterval); showConfirm("Time's up! Submitting.", "Time's Up").then(evaluateAndShowResults);}},500);}
-  async function evaluateAndShowResults(){if(!quizSession)return; if(timerInterval)clearInterval(timerInterval); const{questions,userAnswers}=quizSession; let correct=0; const results=questions.map((q,idx)=>{const userLetter=userAnswers[idx]||'';const isCorrect=userLetter===q.correctLetter; if(isCorrect)correct++; return {q,userLetter,isCorrect,correctLetter:q.correctLetter,options:q.options};}); const total=questions.length; const pct=Math.round(correct/total*100); document.getElementById('quizOverlay')?.remove(); let resultsHtml=`<div class="modal-card"><div style="text-align:center;"><i class="fas fa-chart-line" style="font-size:2.5rem;"></i><h2>Quiz Results</h2><p>${correct}/${total} correct (${pct}%)</p></div><div style="max-height:60vh;overflow-y:auto;">`; results.forEach((res,idx)=>{resultsHtml+=`<div class="result-question-card ${res.isCorrect?'correct':'incorrect'}"><div><strong>Q${idx+1}: ${escapeHtml(res.q.text)}</strong> ${res.isCorrect?'<span style="color:#10b981;">✔ Correct</span>':'<span style="color:#ef4444;">✘ Incorrect</span>'}</div>`; res.options.forEach((opt,optIdx)=>{const letter=String.fromCharCode(65+optIdx); let statusIcon='',extra=''; if(res.userLetter===letter&&res.isCorrect) statusIcon='✓',extra='user-answer correct-answer'; else if(res.userLetter===letter&&!res.isCorrect) statusIcon='✗',extra='user-answer'; else if(res.correctLetter===letter) statusIcon='✓',extra='correct-answer'; else statusIcon='·'; resultsHtml+=`<div class="result-option ${extra}"><span>${statusIcon}</span> <strong>${letter}.</strong> ${escapeHtml(opt)}</div>`;}); resultsHtml+=`</div>`;}); resultsHtml+=`<div class="modal-buttons"><button id="closeDetailedResults" class="primary">Close</button></div></div>`; const resModal=document.createElement('div'); resModal.className='modal-overlay active'; resModal.innerHTML=resultsHtml; document.body.appendChild(resModal); quizSession=null; document.getElementById('closeDetailedResults')?.addEventListener('click',()=>resModal.remove());}
 
-  document.getElementById('createReviewerBtn').addEventListener('click', () => { document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus"></i> Create reviewer'; ['reviewerTitle','studyText','quizRawData'].forEach(id=>document.getElementById(id).value=''); delete window._editId; document.getElementById('reviewerModal').classList.add('active'); });
-  document.getElementById('cancelModalBtn').addEventListener('click', () => document.getElementById('reviewerModal').classList.remove('active'));
-  document.getElementById('saveReviewerBtn').addEventListener('click', saveReviewerFromModal);
-  document.getElementById('exportMainBtn').addEventListener('click', openExportModal);
-  document.getElementById('importMainBtn').addEventListener('click', ()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='application/json'; inp.onchange=e=>{ const file=e.target.files[0]; const reader=new FileReader(); reader.onload=ev=>{ try{ const obj=JSON.parse(ev.target.result); if(obj.type==='forgot_study_slideshow' && obj.reviewer){ const r=obj.reviewer; reviewers.push({id:genId(),title:r.title,studyRawText:r.studyRawText,quizQuestions:r.quizQuestions,parsedPages:parsePagesFromRaw(r.studyRawText)}); persist();renderReviewerList(); showConfirm(`Imported: ${r.title}`,'Success'); }else if(obj.type==='forgot_study_slideshow_bundle' && Array.isArray(obj.reviewers)){ for(const br of obj.reviewers){ reviewers.push({id:genId(),title:br.title,studyRawText:br.studyRawText,quizQuestions:br.quizQuestions,parsedPages:parsePagesFromRaw(br.studyRawText)}); } persist();renderReviewerList(); showConfirm(`Bundle imported: ${obj.reviewers.length} reviewers.`,'Success'); } else showConfirm('Invalid format','Error'); } catch{ showConfirm('Corrupted file','Error'); }}; reader.readAsText(file); }; inp.click(); });
-  document.getElementById('selectAllExportBtn')?.addEventListener('click', ()=>{ document.querySelectorAll('#exportReviewerList .export-checkbox').forEach(cb=>{cb.checked=true; cb.closest('.export-item')?.classList.add('selected');}); });
-  document.getElementById('clearAllExportBtn')?.addEventListener('click', ()=>{ document.querySelectorAll('#exportReviewerList .export-checkbox').forEach(cb=>{cb.checked=false; cb.closest('.export-item')?.classList.remove('selected');}); });
-  document.getElementById('exportSelectedBtn')?.addEventListener('click', exportSelectedIndividual);
-  document.getElementById('exportBundleBtn')?.addEventListener('click', exportAsBundle);
-  document.getElementById('closeExportModalBtn')?.addEventListener('click', ()=>document.getElementById('exportModal').classList.remove('active'));
-  document.getElementById('shuffleYesBtn')?.addEventListener('click', ()=>{ pendingShuffleChoice=true; startQuizWithCurrentSettings(); });
-  document.getElementById('shuffleNoBtn')?.addEventListener('click', ()=>{ pendingShuffleChoice=false; startQuizWithCurrentSettings(); });
-  document.getElementById('cancelQuizOptBtn')?.addEventListener('click', ()=>{ document.getElementById('quizOptionsModal').classList.remove('active'); pendingQuizReviewer=null; pendingShuffleChoice=null; });
-  document.querySelectorAll('input[name="timerOption"]').forEach(radio=>radio.addEventListener('change',()=>{ const isOn=document.querySelector('input[name="timerOption"]:checked').value==='on'; document.getElementById('timerDurationRow').style.display=isOn?'flex':'none'; }));
+  function buildUnifiedQuizOverlay() {
+    if (!quizSession) return;
+    const overlay = document.createElement('div');
+    overlay.id = 'quizOverlay';
+    overlay.className = 'slideshow-overlay';
+    let html = `<div class="slideshow-header"><h3><i class="fas fa-clock"></i> Quiz ${quizSession.enableTimer ? '<span id="quizTimer">--:--</span>' : '<i class="fas fa-infinity"></i>'}</h3><button id="qzExitBtn" class="btn"><i class="fas fa-times"></i> Exit Quiz</button></div><div id="qzScroll" style="max-height:70vh;overflow-y:auto;">`;
+    quizSession.questions.forEach((q, idx) => {
+      html += `<div class="slide-content"><strong><i class="fas fa-question-circle"></i> ${idx+1}. [${q.type}] ${escapeHtml(q.text)}</strong><div style="margin-top:0.8rem;">`;
+      if (q.type === 'MCQ') {
+        q.options.forEach((opt, oi) => {
+          const letter = String.fromCharCode(65+oi);
+          html += `<label style="display:flex;gap:0.5rem;"><input type="radio" name="q${idx}" value="${letter}"> <strong>${letter}.</strong> ${escapeHtml(opt)}</label>`;
+        });
+      } else if (q.type === 'FILL') {
+        html += `<input type="text" id="fill_${idx}" class="fill-input" placeholder="Type your answer...">`;
+      } else if (q.type === 'IDENT') {
+        html += `<div class="identification-box"><textarea id="ident_${idx}" rows="2" placeholder="Separate by commas (e.g., Atomicity, Consistency, Isolation)" style="width:100%;"></textarea><div class="id-prompt">Expected terms: ${q.expectedAnswers.join(', ')}</div></div>`;
+      }
+      html += `</div></div>`;
+    });
+    html += `<div style="margin:1rem"><button id="qzSubmitBtn" class="primary">Submit Quiz</button></div></div>`;
+    overlay.innerHTML = html;
+    document.body.appendChild(overlay);
+    
+    quizSession.questions.forEach((q, idx) => {
+      if (q.type === 'MCQ') {
+        overlay.querySelectorAll(`input[name="q${idx}"]`).forEach(r => {
+          r.addEventListener('change', e => {
+            quizSession.userAnswers[idx] = e.target.value;
+            quizSession.userRawAnswers[idx] = e.target.value;
+          });
+        });
+      } else if (q.type === 'FILL') {
+        const inp = document.getElementById(`fill_${idx}`);
+        inp.addEventListener('input', e => {
+          quizSession.userRawAnswers[idx] = e.target.value;
+          quizSession.userAnswers[idx] = e.target.value;
+        });
+      } else if (q.type === 'IDENT') {
+        const ta = document.getElementById(`ident_${idx}`);
+        ta.addEventListener('input', e => {
+          quizSession.userRawAnswers[idx] = e.target.value;
+          quizSession.userAnswers[idx] = e.target.value;
+        });
+      }
+    });
+    overlay.querySelector('#qzExitBtn').addEventListener('click', async () => {
+      if (await showConfirm('Exit quiz?', 'Exit')) {
+        if (timerInterval) clearInterval(timerInterval);
+        quizSession = null;
+        overlay.remove();
+      }
+    });
+    overlay.querySelector('#qzSubmitBtn').addEventListener('click', evaluateUnifiedResults);
+  }
+
+  function startQuizTimer() {
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      if (!quizSession) { clearInterval(timerInterval); return; }
+      const elapsed = Math.floor((Date.now() - quizSession.startTime) / 1000);
+      const remaining = Math.max(0, quizSession.timeLimit - elapsed);
+      const el = document.getElementById('quizTimer');
+      if (el) el.innerText = formatTime(remaining);
+      if (remaining <= 0) {
+        clearInterval(timerInterval);
+        showConfirm("Time's up! Submitting.", "Time's Up").then(evaluateUnifiedResults);
+      }
+    }, 500);
+  }
+
+  async function evaluateUnifiedResults() {
+    if (!quizSession) return;
+    if (timerInterval) clearInterval(timerInterval);
+    const { questions, userRawAnswers } = quizSession;
+    let correct = 0;
+    const results = questions.map((q, idx) => {
+      let isCorrect = false;
+      const userGiven = userRawAnswers[idx] || '';
+      if (q.type === 'MCQ') {
+        isCorrect = (userGiven === q.correctLetter);
+      } else if (q.type === 'FILL') {
+        isCorrect = isFillCorrect(userGiven, q.correctAnswer);
+      } else if (q.type === 'IDENT') {
+        isCorrect = isIdentificationCorrect(userGiven, q.expectedAnswers, q.normalizedAnswers);
+      }
+      if (isCorrect) correct++;
+      let detail = '';
+      if (q.type === 'FILL') detail = `Correct answer: ${q.correctAnswer}`;
+      else if (q.type === 'IDENT') detail = `Expected: ${q.expectedAnswers.join(', ')}`;
+      else if (q.type === 'MCQ') detail = `Correct option: ${q.correctLetter}`;
+      return { q, userGiven, isCorrect, detail };
+    });
+    const total = questions.length;
+    const pct = Math.round(correct/total*100);
+    document.getElementById('quizOverlay')?.remove();
+    let resultsHtml = `<div class="modal-card"><div style="text-align:center;"><i class="fas fa-chart-line"></i><h2>Quiz Results</h2><p>${correct}/${total} correct (${pct}%)</p></div><div style="max-height:60vh;overflow-y:auto;">`;
+    results.forEach((res, idx) => {
+      resultsHtml += `<div class="result-question-card ${res.isCorrect ? 'correct' : 'incorrect'}">
+        <div><strong>Q${idx+1} [${res.q.type}]</strong> ${escapeHtml(res.q.text)} ${res.isCorrect ? '✔' : '✘'}</div>
+        <div>Your answer: ${escapeHtml(res.userGiven || '(no answer)')}</div>
+        <div class="result-answer-detail">${res.detail}</div>
+      </div>`;
+    });
+    resultsHtml += `<div class="modal-buttons"><button id="closeDetailedResults" class="primary">Close</button></div></div>`;
+    const resModal = document.createElement('div');
+    resModal.className = 'modal-overlay active';
+    resModal.innerHTML = resultsHtml;
+    document.body.appendChild(resModal);
+    quizSession = null;
+    document.getElementById('closeDetailedResults')?.addEventListener('click', () => resModal.remove());
+  }
+
+ 
+  function openExportModal() {
+    const modal = document.getElementById('exportModal');
+    const container = document.getElementById('exportReviewerList');
+    container.innerHTML = reviewers.map(rev => `
+      <div class="export-item" data-id="${rev.id}">
+        <input type="checkbox" class="export-checkbox" value="${rev.id}">
+        <div><strong>${escapeHtml(rev.title)}</strong><div>${rev.quizQuestions.length} questions</div></div>
+      </div>
+    `).join('');
+    modal.classList.add('active');
+    document.getElementById('exportSelectedBtn').onclick = () => {
+      const ids = Array.from(document.querySelectorAll('#exportReviewerList .export-checkbox:checked')).map(cb => cb.value);
+      const toExp = reviewers.filter(r => ids.includes(r.id));
+      toExp.forEach(r => {
+        const data = { type: 'forgot_study_slideshow', version: '3.0', reviewer: { id: r.id, title: r.title, studyRawText: r.studyRawText, quizQuestionsRaw: questionsToRawText(r.quizQuestions) } };
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+        a.download = `${r.title.replace(/[^a-z0-9]/gi, '_')}.json`;
+        a.click();
+      });
+      modal.classList.remove('active');
+    };
+    document.getElementById('exportBundleBtn').onclick = () => {
+      const ids = Array.from(document.querySelectorAll('#exportReviewerList .export-checkbox:checked')).map(cb => cb.value);
+      const bundle = { type: 'forgot_study_slideshow_bundle', version: '3.0', reviewers: reviewers.filter(r => ids.includes(r.id)).map(r => ({ id: r.id, title: r.title, studyRawText: r.studyRawText, quizQuestionsRaw: questionsToRawText(r.quizQuestions) })) };
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' }));
+      a.download = `bundle_${Date.now()}.json`;
+      a.click();
+      modal.classList.remove('active');
+    };
+    document.getElementById('closeExportModalBtn').onclick = () => modal.classList.remove('active');
+  }
+
+  
+  document.getElementById('createReviewerBtn').onclick = () => {
+    document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus"></i> Create reviewer';
+    ['reviewerTitle', 'studyText', 'quizRawData'].forEach(id => document.getElementById(id).value = '');
+    delete window._editId;
+    document.getElementById('reviewerModal').classList.add('active');
+  };
+  document.getElementById('cancelModalBtn').onclick = () => document.getElementById('reviewerModal').classList.remove('active');
+  document.getElementById('saveReviewerBtn').onclick = saveReviewerFromModal;
+  document.getElementById('exportMainBtn').onclick = openExportModal;
+  document.getElementById('importMainBtn').onclick = () => {
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = 'application/json';
+    inp.onchange = e => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = ev => {
+        try {
+          const obj = JSON.parse(ev.target.result);
+          if (obj.type === 'forgot_study_slideshow' && obj.reviewer) {
+            const r = obj.reviewer;
+            reviewers.push({ id: genId(), title: r.title, studyRawText: r.studyRawText, quizQuestionsRaw: r.quizQuestionsRaw, quizQuestions: parseUnifiedQuestions(r.quizQuestionsRaw || ''), parsedPages: parsePagesFromRaw(r.studyRawText) });
+            persist(); renderReviewerList();
+            showConfirm(`Imported: ${r.title}`, 'Success');
+          } else if (obj.type === 'forgot_study_slideshow_bundle' && Array.isArray(obj.reviewers)) {
+            for (const br of obj.reviewers) {
+              reviewers.push({ id: genId(), title: br.title, studyRawText: br.studyRawText, quizQuestionsRaw: br.quizQuestionsRaw, quizQuestions: parseUnifiedQuestions(br.quizQuestionsRaw || ''), parsedPages: parsePagesFromRaw(br.studyRawText) });
+            }
+            persist(); renderReviewerList();
+            showConfirm(`Bundle imported: ${obj.reviewers.length} reviewers.`, 'Success');
+          } else showConfirm('Invalid format', 'Error');
+        } catch(e) { showConfirm('Corrupted file', 'Error'); }
+      };
+      reader.readAsText(file);
+    };
+    inp.click();
+  };
+  document.getElementById('shuffleYesBtn').onclick = () => { pendingShuffleChoice = true; startQuizWithCurrentSettings(); };
+  document.getElementById('shuffleNoBtn').onclick = () => { pendingShuffleChoice = false; startQuizWithCurrentSettings(); };
+  document.getElementById('cancelQuizOptBtn').onclick = () => document.getElementById('quizOptionsModal').classList.remove('active');
+  document.querySelectorAll('input[name="timerOption"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      document.getElementById('timerDurationRow').style.display = document.querySelector('input[name="timerOption"]:checked').value === 'on' ? 'flex' : 'none';
+    });
+  });
   loadReviewers();
 </script>
 </body>

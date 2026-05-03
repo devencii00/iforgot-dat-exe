@@ -479,14 +479,14 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
       return;
     }
     pendingQuizReviewer = rev;
-    // Reset UI selection for shuffle buttons to default (original order as primary)
+     
     const shuffleYesBtn = document.getElementById('shuffleYesBtn');
     const shuffleNoBtn = document.getElementById('shuffleNoBtn');
     if (shuffleYesBtn && shuffleNoBtn) {
       shuffleYesBtn.classList.remove('primary');
       shuffleNoBtn.classList.add('primary');
     }
-    // Reset timer visibility
+  
     const timerOnRadio = document.querySelector('input[name="timerOption"][value="on"]');
     if (timerOnRadio) timerOnRadio.checked = true;
     document.getElementById('timerDurationRow').style.display = 'flex';
@@ -588,14 +588,14 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
     }
   }
 
-  // New function to start quiz with current settings from modal
+  
   function startQuizWithCurrentSettings() {
     if (!pendingQuizReviewer) {
       showAlert('No reviewer selected.', 'Error');
       return;
     }
     
-    // Get timer setting
+   
     const enableTimer = document.querySelector('input[name="timerOption"]:checked').value === 'on';
     let timeLimitSec = null;
     if (enableTimer) {
@@ -608,15 +608,15 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
       }
     }
     
-    // Get shuffle setting (based on which button has 'primary' class)
+   
     const shuffleYesBtn = document.getElementById('shuffleYesBtn');
     const shuffleNoBtn = document.getElementById('shuffleNoBtn');
     const shouldShuffle = shuffleYesBtn && shuffleYesBtn.classList.contains('primary');
     
-    // Close settings modal
+
     document.getElementById('quizOptionsModal').classList.remove('active');
     
-    // Prepare questions
+   
     let questions = [...pendingQuizReviewer.quizQuestions];
     if (shouldShuffle) {
       for (let i = questions.length - 1; i > 0; i--) {
@@ -784,7 +784,7 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
     document.getElementById('closeExportModalBtn').onclick = () => modal.classList.remove('active');
   }
 
-  // Event Listeners
+  
   document.getElementById('createReviewerBtn').onclick = () => {
     document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus"></i> Create reviewer';
     ['reviewerTitle', 'studyText', 'quizRawData'].forEach(id => document.getElementById(id).value = '');
@@ -823,7 +823,7 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
     inp.click();
   };
   
-  // Shuffle buttons toggle style
+  
   document.getElementById('shuffleYesBtn').onclick = () => {
     document.getElementById('shuffleYesBtn').classList.add('primary');
     document.getElementById('shuffleNoBtn').classList.remove('primary');
@@ -833,7 +833,7 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
     document.getElementById('shuffleYesBtn').classList.remove('primary');
   };
   
-  // Start quiz button
+ 
   document.getElementById('startQuizBtn').onclick = () => { startQuizWithCurrentSettings(); };
   document.getElementById('cancelQuizOptBtn').onclick = () => {
     document.getElementById('quizOptionsModal').classList.remove('active');

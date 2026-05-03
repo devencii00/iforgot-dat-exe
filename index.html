@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>I forgot to study dat exe</title>
- <link rel="icon" type="image/x-icon" href="forgotexe.ico">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap"
- rel="stylesheet">
+  <title>I forgot to study dat exe | Slideshow + Quiz</title>
+  <link rel="icon" type="image/x-icon" href="forgotexe.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,7 +50,7 @@
     .modal-overlay.active { display: flex; }
     .modal-card {
       background: white; max-width: 550px; width: 90%; border-radius: 2rem;
-      padding: 2rem; box-shadow: 0 25px 40px rgba(0,0,0,0.2);
+      padding: 2rem; box-shadow: 0 25px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto;
     }
     .modal-card h2 { margin-bottom: 1rem; font-weight: 600; }
     .modal-card input, .modal-card textarea {
@@ -82,6 +81,23 @@
     .dot { width: 10px; height: 10px; background: #cbd5e1; border-radius: 50%; transition: all 0.2s; cursor: pointer; }
     .dot.active { background: #3b82f6; width: 24px; border-radius: 12px; }
     .quiz-ready-section { margin-top: 1.5rem; text-align: center; }
+
+    .result-question-card {
+      background: white; border-radius: 1.5rem; padding: 1.5rem;
+      margin-bottom: 1rem; border-left: 4px solid #cbd5e1;
+    }
+    .result-question-card.correct { border-left-color: #10b981; background: #f0fdf4; }
+    .result-question-card.incorrect { border-left-color: #ef4444; background: #fef2f2; }
+    .result-option {
+      padding: 0.5rem 0.75rem; margin: 0.3rem 0; border-radius: 0.75rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .result-option.user-answer { background: #fef3c7; border: 1px solid #f59e0b; }
+    .result-option.correct-answer { background: #d1fae5; border: 1px solid #10b981; }
+    .result-option .status-icon { width: 1.5rem; text-align: center; }
+    .fa-check-circle { color: #10b981; }
+    .fa-times-circle { color: #ef4444; }
+    
     @media (max-width: 700px) { body { padding: 1rem; } .slide-content { padding: 1rem; } }
   </style>
 </head>
@@ -91,7 +107,7 @@
   <div class="app-header">
     <div class="logo">
       <h1><i class="fas fa-book"></i> I forgot to study dat exe</h1>
-      <p style="font-size:0.7rem;">LMAO you gon study last minute lol</p>
+      <p style="font-size:0.7rem;">slideshow study | quiz with detailed results</p>
     </div>
     <div class="toolbar">
       <button id="createReviewerBtn" class="primary"><i class="fas fa-plus-circle"></i> New reviewer</button>
@@ -119,13 +135,14 @@ Topic one content here
 [PAGE 2]
 Topic two content here"></textarea>
     <label>Quiz questions (Question | A | B | C | D | CorrectLetter)</label>
-    <textarea id="quizRawData" rows="5" placeholder="What is ACID? | Atomicity | Accuracy | Atomic | None | A"></textarea>
+    <textarea id="quizRawData" rows="5" placeholder="What is ACID? | Atomicity | Consistency | Isolation | Durability | A"></textarea>
     <div class="modal-buttons">
       <button id="cancelModalBtn">Cancel</button>
       <button id="saveReviewerBtn" class="primary">Save reviewer</button>
     </div>
   </div>
 </div>
+
 
 <div id="quizOptionsModal" class="modal-overlay">
   <div class="modal-card">
@@ -136,42 +153,43 @@ Topic two content here"></textarea>
       <h2 style="margin: 0;">Quiz settings</h2>
     </div>
     <p style="color:#64748b; font-size:0.85rem; margin-bottom:1.5rem; margin-left: 3.2rem;">
-      Configure how you want to take this quiz.
+      Configure timer and shuffle options.
     </p>
 
     <div style="display:flex; flex-direction:column; gap:0.8rem; margin-bottom:1.5rem;">
-  
-      <label id="timerOnLabel" style="display:flex; align-items:flex-start; gap:1rem; padding:1.2rem; border:2px solid #3b82f6; border-radius:1.5rem; cursor:pointer; background:#eff6ff; transition: 0.2s;">
+      <label id="timerOnLabel" style="display:flex; align-items:flex-start; gap:1rem; padding:1.2rem; border:2px solid #3b82f6; border-radius:1.5rem; cursor:pointer; background:#eff6ff;">
         <input type="radio" name="timerOption" value="on" checked style="margin-top:4px; accent-color: #3b82f6;">
         <div style="flex: 1;">
-          <div style="font-weight:600; color:#1e40af; display: flex; align-items: center; gap: 0.5rem;">
-             Enable timer
-          </div>
+          <div style="font-weight:600; color:#1e40af; display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-clock"></i> Enable timer</div>
           <div style="font-size:0.78rem; color:#3b82f6; margin-top:2px;">Anti-cheat mode — fixed time limit</div>
-          
-   
           <div id="timerDurationRow" style="display:flex; align-items:center; gap:0.5rem; margin-top: 1rem; background: rgba(255,255,255,0.6); padding: 0.5rem 0.8rem; border-radius: 1rem; border: 1px solid rgba(59,130,246,0.2); width: fit-content;">
-            <input type="number" id="timerMinutes" min="0" max="180" value="1" style="width:50px; padding:0.3rem; border-radius:0.6rem; border:1px solid #cbd5e1; text-align:center; margin:0;">
-            <span style="font-size:0.75rem; font-weight: 600; color:#1e40af;">m</span>
-            <input type="number" id="timerSeconds" min="0" max="59" value="10" style="width:50px; padding:0.3rem; border-radius:0.6rem; border:1px solid #cbd5e1; text-align:center; margin:0;">
-            <span style="font-size:0.75rem; font-weight: 600; color:#1e40af;">s</span>
+            <input type="number" id="timerMinutes" min="0" max="180" value="1" style="width:55px; padding:0.3rem; border-radius:0.6rem; border:1px solid #cbd5e1; text-align:center;">
+            <span>min</span>
+            <input type="number" id="timerSeconds" min="0" max="59" value="30" style="width:55px; padding:0.3rem; border-radius:0.6rem; border:1px solid #cbd5e1; text-align:center;">
+            <span>sec</span>
           </div>
         </div>
       </label>
-
-   
-      <label id="timerOffLabel" style="display:flex; align-items:flex-start; gap:1rem; padding:1.2rem; border:1px solid #e2e8f0; border-radius:1.5rem; cursor:pointer; background:white; transition: 0.2s;">
+      <label id="timerOffLabel" style="display:flex; align-items:flex-start; gap:1rem; padding:1.2rem; border:1px solid #e2e8f0; border-radius:1.5rem; cursor:pointer; background:white;">
         <input type="radio" name="timerOption" value="off" style="margin-top:4px; accent-color: #3b82f6;">
         <div style="flex: 1;">
-          <div style="font-weight:600; color:#1e293b;">No timer</div>
+          <div style="font-weight:600; color:#1e293b;"><i class="fas fa-infinity"></i> No timer</div>
           <div style="font-size:0.78rem; color:#64748b; margin-top:2px;">Relaxed mode — take as long as you need</div>
         </div>
       </label>
     </div>
 
+    <div style="margin: 1rem 0 1.5rem 0; padding-top: 0.5rem; border-top: 1px solid #e2e8f0;">
+      <div style="font-weight: 600; margin-bottom: 0.8rem; color: #1e293b;"><i class="fas fa-random"></i> Shuffle Questions</div>
+      <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+        <button id="shuffleYesBtn" class="btn primary" style="flex:1; justify-content: center;"><i class="fas fa-random"></i> Shuffle Questions</button>
+        <button id="shuffleNoBtn" class="btn" style="flex:1; justify-content: center;"><i class="fas fa-ban"></i> Do not shuffle</button>
+      </div>
+      <p style="font-size:0.7rem; color:#64748b; margin-top: 0.5rem;">Choose whether to randomize question order</p>
+    </div>
+
     <div class="modal-buttons">
       <button id="cancelQuizOptBtn" class="btn">Cancel</button>
-      <button id="confirmQuizOptBtn" class="btn primary"><i class="fas fa-play"></i> Start Quiz</button>
     </div>
   </div>
 </div>
@@ -182,7 +200,7 @@ Topic two content here"></textarea>
   let quizSession = null;
   let timerInterval = null;
   let pendingQuizReviewer = null;
-
+  let pendingShuffleChoice = null; 
 
   function showConfirm(message, title) {
     return new Promise(resolve => {
@@ -204,7 +222,6 @@ Topic two content here"></textarea>
     });
   }
 
-
   function escapeHtml(str) {
     return String(str || '').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
   }
@@ -212,7 +229,6 @@ Topic two content here"></textarea>
   function formatTime(sec) {
     return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(sec%60).padStart(2,'0');
   }
-
 
   function parsePagesFromRaw(rawText) {
     const lines = rawText.split(/\r?\n/);
@@ -252,16 +268,15 @@ Topic two content here"></textarea>
     }, []);
   }
 
-
   function persist() {
-    localStorage.setItem('forgot_study_rev_slides_v4', JSON.stringify(
+    localStorage.setItem('forgot_study_rev_slides_v6', JSON.stringify(
       reviewers.map(r => ({ id: r.id, title: r.title, studyRawText: r.studyRawText, quizQuestions: r.quizQuestions }))
     ));
   }
 
   function loadReviewers() {
     try {
-      const stored = localStorage.getItem('forgot_study_rev_slides_v4');
+      const stored = localStorage.getItem('forgot_study_rev_slides_v6');
       if (stored) reviewers = JSON.parse(stored).map(r => ({ ...r, parsedPages: parsePagesFromRaw(r.studyRawText) }));
     } catch(e) { reviewers = []; }
 
@@ -283,14 +298,12 @@ SQL Joins Overview
 INNER JOIN: Returns only matching rows from both tables
 LEFT JOIN: Returns all rows from left table, matching from right
 RIGHT JOIN: Returns all rows from right table, matching from left
-FULL JOIN: Returns all rows when there's a match in either table
 
 [PAGE 3]
 Quick Recap
 
 ACID ensures data integrity
-Joins combine tables based on relationships
-Practice writing queries to master SQL`;
+Joins combine tables based on relationships`;
       const demoQuiz = `What does ACID stand for? | Atomicity,Consistency,Isolation,Durability | Accuracy,Control,Isolation,Durability | Atomic,Copy,Index,Data | None | A
 Which join returns all records from left table? | INNER JOIN | LEFT JOIN | RIGHT JOIN | FULL JOIN | B
 What ensures all or nothing execution? | Atomicity | Consistency | Isolation | Durability | A`;
@@ -299,7 +312,6 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     }
     renderReviewerList();
   }
-
 
   function renderReviewerList() {
     const c = document.getElementById('reviewersContainer');
@@ -352,7 +364,6 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     }
   }
 
-
   function openEditModal(id) {
     const r = reviewers.find(r => r.id === id);
     if (!r) return;
@@ -381,7 +392,6 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     document.getElementById('reviewerModal').classList.remove('active');
   }
 
-
   function startSlideshow(reviewerId) {
     const rev = reviewers.find(r => r.id === reviewerId);
     if (!rev) return;
@@ -390,7 +400,6 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
   }
 
   function buildSlideshowOverlay() {
-  
     document.getElementById('slideshowRoot')?.remove();
     if (!activeSlideshow) return;
 
@@ -426,52 +435,42 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
       </div>`;
     document.body.appendChild(overlay);
 
-
     document.getElementById('ssExitBtn').addEventListener('click', async () => {
       if (await showConfirm('Exit study mode?', 'Exit Study')) {
         overlay.remove();
         activeSlideshow = null;
       }
     });
-
-
     document.getElementById('ssPrevBtn').addEventListener('click', () => {
       if (activeSlideshow && activeSlideshow.currentIndex > 0) {
         activeSlideshow.currentIndex--;
         buildSlideshowOverlay();
       }
     });
-
-   
     document.getElementById('ssNextBtn').addEventListener('click', () => {
       if (activeSlideshow && activeSlideshow.currentIndex < pages.length - 1) {
         activeSlideshow.currentIndex++;
         buildSlideshowOverlay();
       }
     });
-
-
     overlay.querySelectorAll('.dot[data-i]').forEach(dot => {
       dot.addEventListener('click', () => {
         activeSlideshow.currentIndex = parseInt(dot.dataset.i);
         buildSlideshowOverlay();
       });
     });
-
-
     const quizBtn = document.getElementById('ssTakeQuizBtn');
     if (quizBtn) {
       quizBtn.addEventListener('click', async () => {
         if (await showConfirm('Ready to take the quiz?', 'Start Quiz')) {
           const revId = activeSlideshow.reviewerId;
-          overlay.remove();                            
-          activeSlideshow = null;                   
-          launchQuizOptions(revId);                 
+          overlay.remove();
+          activeSlideshow = null;
+          launchQuizOptions(revId);
         }
       });
     }
   }
-
 
   function launchQuizOptions(reviewerId) {
     const rev = reviewers.find(r => r.id === reviewerId);
@@ -481,11 +480,29 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
       return;
     }
     pendingQuizReviewer = rev;
+    pendingShuffleChoice = null;
+
+    const isTimerOn = document.querySelector('input[name="timerOption"]:checked')?.value === 'on';
+    document.getElementById('timerDurationRow').style.display = isTimerOn ? 'flex' : 'none';
     document.getElementById('quizOptionsModal').classList.add('active');
   }
 
-  document.getElementById('confirmQuizOptBtn').addEventListener('click', () => {
+ 
+  document.getElementById('shuffleYesBtn')?.addEventListener('click', () => {
+    pendingShuffleChoice = true;
+    startQuizWithCurrentSettings();
+  });
+  document.getElementById('shuffleNoBtn')?.addEventListener('click', () => {
+    pendingShuffleChoice = false;
+    startQuizWithCurrentSettings();
+  });
+
+  function startQuizWithCurrentSettings() {
     if (!pendingQuizReviewer) return;
+    if (pendingShuffleChoice === null) {
+      showConfirm('Please select shuffle option first.', 'Shuffle Required');
+      return;
+    }
     const enableTimer = document.querySelector('input[name="timerOption"]:checked').value === 'on';
     let timeLimitSec = null;
     if (enableTimer) {
@@ -496,8 +513,33 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     }
     document.getElementById('quizOptionsModal').classList.remove('active');
     const rev = pendingQuizReviewer;
+    const shouldShuffle = pendingShuffleChoice;
     pendingQuizReviewer = null;
-    startQuizEngine(rev, enableTimer, timeLimitSec);
+    pendingShuffleChoice = null;
+    
+  
+    let questions = [...rev.quizQuestions];
+    if (shouldShuffle) {
+      for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+      }
+    }
+    quizSession = {
+      questions,
+      userAnswers: new Array(questions.length).fill(null),
+      timeLimit: enableTimer ? timeLimitSec : null,
+      startTime: Date.now(),
+      enableTimer
+    };
+    buildQuizOverlay();
+    if (enableTimer) startQuizTimer();
+  }
+
+  document.getElementById('cancelQuizOptBtn')?.addEventListener('click', () => {
+    document.getElementById('quizOptionsModal').classList.remove('active');
+    pendingQuizReviewer = null;
+    pendingShuffleChoice = null;
   });
 
 
@@ -512,81 +554,30 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     });
   });
 
-  document.getElementById('cancelQuizOptBtn').addEventListener('click', () => {
-    document.getElementById('quizOptionsModal').classList.remove('active');
-    pendingQuizReviewer = null;
-  });
-
-
-  function startQuizEngine(reviewer, enableTimer, timeLimitSec) {
-    showConfirm('Shuffle quiz questions?', 'Shuffle').then(shuffle => {
-      let questions = [...reviewer.quizQuestions];
-      if (shuffle) {
-        for (let i = questions.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [questions[i], questions[j]] = [questions[j], questions[i]];
-        }
-      }
-      quizSession = {
-        questions,
-        userAnswers: new Array(questions.length).fill(null),
-        timeLimit: enableTimer ? (timeLimitSec || 70) : null,
-        startTime: Date.now(),
-        enableTimer
-      };
-      buildQuizOverlay();
-      if (enableTimer) startQuizTimer();
-    });
-  }
-
   function buildQuizOverlay() {
     document.getElementById('quizOverlay')?.remove();
     if (!quizSession) return;
-
     const overlay = document.createElement('div');
     overlay.id = 'quizOverlay';
     overlay.className = 'slideshow-overlay';
-
-    let html = `
-      <div class="slideshow-header">
-        <h3><i class="fas fa-clock"></i> Quiz &nbsp;
-          ${quizSession.enableTimer
-            ? '<span id="quizTimer">--:--</span>'
-            : '<i class="fas fa-infinity"></i> no timer'}
-        </h3>
-        <button id="qzExitBtn" class="btn"><i class="fas fa-times"></i> Exit Quiz</button>
-      </div>
-      <div id="qzScroll" style="max-height:70vh;overflow-y:auto;">`;
-
+    let html = `<div class="slideshow-header"><h3><i class="fas fa-clock"></i> Quiz ${quizSession.enableTimer ? '<span id="quizTimer">--:--</span>' : '<i class="fas fa-infinity"></i> no timer'}</h3><button id="qzExitBtn" class="btn"><i class="fas fa-times"></i> Exit Quiz</button></div><div id="qzScroll" style="max-height:70vh;overflow-y:auto;">`;
     quizSession.questions.forEach((q, idx) => {
       const sel = quizSession.userAnswers[idx] || '';
-      html += `<div class="slide-content" style="margin-bottom:1rem;">
-        <strong><i class="fas fa-question-circle"></i> ${idx+1}. ${escapeHtml(q.text)}</strong>
-        <div style="margin-top:0.8rem;">`;
+      html += `<div class="slide-content" style="margin-bottom:1rem;"><strong><i class="fas fa-question-circle"></i> ${idx+1}. ${escapeHtml(q.text)}</strong><div style="margin-top:0.8rem;">`;
       q.options.forEach((opt, oi) => {
         const letter = String.fromCharCode(65 + oi);
-        html += `<label style="display:flex;gap:0.5rem;margin:0.4rem 0;">
-          <input type="radio" name="q${idx}" value="${letter}" ${sel===letter?'checked':''}>
-          <strong>${letter}.</strong> ${escapeHtml(opt)}
-        </label>`;
+        html += `<label style="display:flex;gap:0.5rem;margin:0.4rem 0;"><input type="radio" name="q${idx}" value="${letter}" ${sel===letter?'checked':''}> <strong>${letter}.</strong> ${escapeHtml(opt)}</label>`;
       });
       html += `</div></div>`;
     });
-
-    html += `<div style="margin-top:1rem;padding-bottom:1rem;">
-      <button id="qzSubmitBtn" class="primary"><i class="fas fa-check-double"></i> Submit Quiz</button>
-    </div></div>`;
-
+    html += `<div style="margin-top:1rem;"><button id="qzSubmitBtn" class="primary"><i class="fas fa-check-double"></i> Submit Quiz</button></div></div>`;
     overlay.innerHTML = html;
     document.body.appendChild(overlay);
-
- 
     quizSession.questions.forEach((_, i) => {
       overlay.querySelectorAll(`input[name="q${i}"]`).forEach(r => {
         r.addEventListener('change', e => { if (quizSession) quizSession.userAnswers[i] = e.target.value; });
       });
     });
-
     document.getElementById('qzExitBtn').addEventListener('click', async () => {
       if (await showConfirm('Exit quiz? Progress will be lost.', 'Exit Quiz')) {
         if (timerInterval) clearInterval(timerInterval);
@@ -594,7 +585,6 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
         overlay.remove();
       }
     });
-
     document.getElementById('qzSubmitBtn').addEventListener('click', evaluateAndShowResults);
   }
 
@@ -602,9 +592,9 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
       if (!quizSession) { clearInterval(timerInterval); return; }
-      const elapsed    = Math.floor((Date.now() - quizSession.startTime) / 1000);
-      const remaining  = Math.max(0, quizSession.timeLimit - elapsed);
-      const el         = document.getElementById('quizTimer');
+      const elapsed = Math.floor((Date.now() - quizSession.startTime) / 1000);
+      const remaining = Math.max(0, quizSession.timeLimit - elapsed);
+      const el = document.getElementById('quizTimer');
       if (el) el.innerText = formatTime(remaining);
       if (remaining <= 0) {
         clearInterval(timerInterval);
@@ -617,27 +607,68 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     if (!quizSession) return;
     if (timerInterval) clearInterval(timerInterval);
     const { questions, userAnswers } = quizSession;
-    const correct = questions.filter((q,i) => userAnswers[i]?.toUpperCase() === q.correctLetter).length;
-    const total   = questions.length;
-    const pct     = Math.round(correct / total * 100);
-
+    let correct = 0;
+    const results = questions.map((q, idx) => {
+      const userLetter = userAnswers[idx] || '';
+      const isCorrect = userLetter === q.correctLetter;
+      if (isCorrect) correct++;
+      return { q, userLetter, isCorrect, correctLetter: q.correctLetter, options: q.options };
+    });
+    const total = questions.length;
+    const pct = Math.round(correct / total * 100);
     document.getElementById('quizOverlay')?.remove();
 
-    const res = document.createElement('div');
-    res.className = 'modal-overlay active';
-    res.style.zIndex = '9999';
-    res.innerHTML = `
-      <div class="modal-card" style="text-align:center;">
-        <i class="fas fa-chart-line" style="font-size:2.5rem;color:#3b82f6;"></i>
-        <h2 style="margin-top:0.5rem;">Quiz Results</h2>
-        <p style="font-size:1.2rem;margin:1rem 0;">${correct} / ${total} correct &nbsp;(${pct}%)</p>
-        <button id="closeResultsBtn" class="primary"><i class="fas fa-check"></i> Close</button>
-      </div>`;
-    document.body.appendChild(res);
+    let resultsHtml = `<div class="modal-card" style="max-width: 800px;"><div style="text-align:center; margin-bottom:1.5rem;">
+      <i class="fas fa-chart-line" style="font-size:2.5rem; color:#3b82f6;"></i>
+      <h2 style="margin-top:0.5rem;">Quiz Results</h2>
+      <p style="font-size:1.2rem; margin:0.5rem 0;">${correct} / ${total} correct (${pct}%)</p>
+    </div><div style="max-height: 60vh; overflow-y: auto;">`;
+    
+    results.forEach((res, idx) => {
+      const isCorrect = res.isCorrect;
+      resultsHtml += `<div class="result-question-card ${isCorrect ? 'correct' : 'incorrect'}">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+          <strong><i class="fas fa-question-circle"></i> Question ${idx+1}: ${escapeHtml(res.q.text)}</strong>
+          ${isCorrect ? '<span style="color:#10b981;"><i class="fas fa-check-circle"></i> Correct</span>' : '<span style="color:#ef4444;"><i class="fas fa-times-circle"></i> Incorrect</span>'}
+        </div>`;
+      res.options.forEach((opt, optIdx) => {
+        const letter = String.fromCharCode(65 + optIdx);
+        let statusIcon = '';
+        let extraClass = '';
+        if (res.userLetter === letter && isCorrect) {
+          statusIcon = '<i class="fas fa-check-circle" style="color:#10b981;"></i>';
+          extraClass = 'user-answer correct-answer';
+        } else if (res.userLetter === letter && !isCorrect) {
+          statusIcon = '<i class="fas fa-times-circle" style="color:#ef4444;"></i>';
+          extraClass = 'user-answer';
+        } else if (res.correctLetter === letter) {
+          statusIcon = '<i class="fas fa-check-circle" style="color:#10b981;"></i>';
+          extraClass = 'correct-answer';
+        } else {
+          statusIcon = '<i class="far fa-circle" style="color:#94a3b8;"></i>';
+        }
+        let answerLabel = '';
+        if (res.userLetter === letter) answerLabel = '<span style="font-size:0.7rem; background:#fef3c7; padding:0.1rem 0.4rem; border-radius:1rem; margin-left:0.5rem;">Your answer</span>';
+        if (res.correctLetter === letter && res.userLetter !== letter) answerLabel = '<span style="font-size:0.7rem; background:#d1fae5; padding:0.1rem 0.4rem; border-radius:1rem; margin-left:0.5rem;">Correct answer</span>';
+        resultsHtml += `<div class="result-option ${extraClass}">
+          <div class="status-icon">${statusIcon}</div>
+          <div><strong>${letter}.</strong> ${escapeHtml(opt)} ${answerLabel}</div>
+        </div>`;
+      });
+      resultsHtml += `</div>`;
+    });
+    resultsHtml += `<div class="modal-buttons" style="justify-content:center; margin-top:1.5rem;">
+      <button id="closeDetailedResults" class="primary"><i class="fas fa-check"></i> Close</button>
+    </div></div></div>`;
+    
+    const resModal = document.createElement('div');
+    resModal.className = 'modal-overlay active';
+    resModal.style.zIndex = '9999';
+    resModal.innerHTML = resultsHtml;
+    document.body.appendChild(resModal);
     quizSession = null;
-    document.getElementById('closeResultsBtn').addEventListener('click', () => res.remove());
+    document.getElementById('closeDetailedResults').addEventListener('click', () => resModal.remove());
   }
-
 
   async function exportReviewer() {
     if (!reviewers.length) { await showConfirm('No reviewers to export.', 'Info'); return; }
@@ -687,7 +718,6 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
   document.getElementById('saveReviewerBtn').addEventListener('click', saveReviewerFromModal);
   document.getElementById('exportMainBtn').addEventListener('click', exportReviewer);
   document.getElementById('importMainBtn').addEventListener('click', importReviewer);
-
   loadReviewers();
 </script>
 </body>

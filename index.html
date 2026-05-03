@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>I forgot to study dat exe | Slideshow + Quiz (MCQ/FILL/IDENT)</title>
+  <title>I forgot to study dat exe</title>
   <link rel="icon" type="image/x-icon" href="forgotexe.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -48,7 +48,7 @@
     }
     .modal-overlay.active { display: flex; }
     .modal-card {
-      background: white; max-width: 700px; width: 90%; border-radius: 2rem;
+      background: white; max-width: 650px; width: 90%; border-radius: 2rem;
       padding: 2rem; box-shadow: 0 25px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto;
     }
     .modal-card h2 { margin-bottom: 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.8rem; }
@@ -56,11 +56,66 @@
       width: 100%; padding: 0.75rem; border-radius: 1rem; border: 1px solid #cbd5e1;
       font-family: inherit; margin: 0.5rem 0 1rem;
     }
-    .modal-buttons { display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1rem; }
-    .quiz-question-tag { font-size: 0.7rem; background: #e2e8f0; border-radius: 1rem; padding: 0.2rem 0.6rem; margin-left: 0.5rem; }
-    .fill-input { width: 100%; padding: 0.6rem; border-radius: 0.8rem; border: 1px solid #cbd5e1; margin-top: 0.5rem; }
-    .identification-box { background: #f8fafc; border-left: 4px solid #3b82f6; padding: 0.8rem; border-radius: 1rem; margin: 0.5rem 0; }
-    .id-prompt { font-size: 0.75rem; color: #475569; margin-top: 0.5rem; }
+    .modal-buttons { display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1.5rem; }
+    .settings-group {
+      background: #f8fafc;
+      border-radius: 1.5rem;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e2e8f0;
+    }
+    .settings-group h3 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .radio-group {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    .timer-inputs {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+      padding-left: 1rem;
+      flex-wrap: wrap;
+    }
+    .timer-inputs input {
+      width: 70px;
+      margin: 0;
+      text-align: center;
+    }
+    .shuffle-buttons {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+    }
+    .shuffle-buttons button {
+      flex: 1;
+      justify-content: center;
+    }
+    .shuffle-buttons button.active-shuffle {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+    hr {
+      margin: 1rem 0;
+      border: none;
+      border-top: 1px solid #e2e8f0;
+    }
     .export-selector-list {
       display: flex; flex-direction: column; gap: 0.75rem;
       margin: 1rem 0 1.5rem; max-height: 55vh; overflow-y: auto;
@@ -86,13 +141,37 @@
     .dot { width: 10px; height: 10px; background: #cbd5e1; border-radius: 50%; cursor: pointer; }
     .dot.active { background: #3b82f6; width: 24px; border-radius: 12px; }
     .result-question-card {
-      background: white; border-radius: 1.5rem; padding: 1.5rem;
+      background: white; border-radius: 1.5rem; padding: 1rem;
       margin-bottom: 1rem; border-left: 4px solid #cbd5e1;
     }
     .result-question-card.correct { border-left-color: #10b981; background: #f0fdf4; }
     .result-question-card.incorrect { border-left-color: #ef4444; background: #fef2f2; }
     .result-answer-detail { font-size: 0.8rem; color: #475569; margin-top: 0.5rem; }
     @media (max-width: 700px) { body { padding: 1rem; } .slide-content { padding: 1rem; } }
+    .quiz-question-text-only {
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+    }
+    .identification-box {
+      background: #f8fafc;
+      border-left: 4px solid #3b82f6;
+      padding: 0.8rem;
+      border-radius: 1rem;
+      margin: 0.5rem 0;
+    }
+    .id-prompt {
+      font-size: 0.75rem;
+      color: #475569;
+      margin-top: 0.5rem;
+    }
+    .fill-input {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 0.8rem;
+      border: 1px solid #cbd5e1;
+      margin-top: 0.5rem;
+    }
   </style>
 </head>
 <body>
@@ -100,7 +179,7 @@
   <div class="app-header">
     <div class="logo">
       <h1><i class="fas fa-book"></i> I forgot to study dat exe</h1>
-      <p style="font-size:0.7rem;">MCQ | Fill-in-blank | Identification (multiple terms)</p>
+      <p style="font-size:0.7rem;">LMAO you gon study last minute</p>
     </div>
     <div class="toolbar">
       <button id="createReviewerBtn" class="primary"><i class="fas fa-plus-circle"></i> New reviewer</button>
@@ -137,7 +216,7 @@ IDENT | List three types of SQL joins. | INNER JOIN,LEFT JOIN,RIGHT JOIN"></text
   <div class="modal-card">
     <h2><i class="fas fa-file-export"></i> Export reviewers</h2>
     <div id="exportReviewerList" class="export-selector-list"></div>
-    <div class="batch-actions">
+    <div class="batch-actions" style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
       <button id="exportSelectedBtn" class="primary">Export Selected (individual)</button>
       <button id="exportBundleBtn" class="btn">Export as Bundle (JSON)</button>
     </div>
@@ -145,23 +224,40 @@ IDENT | List three types of SQL joins. | INNER JOIN,LEFT JOIN,RIGHT JOIN"></text
   </div>
 </div>
 
-
+<!-- Redesigned Quiz Settings Modal -->
 <div id="quizOptionsModal" class="modal-overlay">
   <div class="modal-card">
-    <h2><i class="fas fa-hourglass-half"></i> Quiz settings</h2>
-    <div style="display:flex;flex-direction:column;gap:1rem;">
-      <label style="display:flex;gap:1rem;"><input type="radio" name="timerOption" value="on" checked> Enable timer</label>
-      <div id="timerDurationRow" style="margin-left:2rem;">
-        <input type="number" id="timerMinutes" value="1" style="width:70px;"> min
-        <input type="number" id="timerSeconds" value="30" style="width:70px;"> sec
+    <h2><i class="fas fa-sliders-h"></i> Quiz Settings</h2>
+    
+    <div class="settings-group">
+      <h3><i class="fas fa-hourglass-half"></i> Timer</h3>
+      <div class="radio-group">
+        <label><input type="radio" name="timerOption" value="on" checked> <i class="fas fa-clock"></i> Enable Timer</label>
+        <label><input type="radio" name="timerOption" value="off"> <i class="fas fa-infinity"></i> No Timer</label>
       </div>
-      <label><input type="radio" name="timerOption" value="off"> No timer</label>
+      <div id="timerDurationRow">
+        <div class="timer-inputs">
+          <span>Time limit:</span>
+          <input type="number" id="timerMinutes" value="1" min="0" max="60"> min
+          <input type="number" id="timerSeconds" value="30" min="0" max="59"> sec
+        </div>
+      </div>
     </div>
-    <div style="margin:1rem 0;">
-      <button id="shuffleYesBtn" class="primary">Shuffle Questions</button>
-      <button id="shuffleNoBtn" class="btn">Do not shuffle</button>
+
+    <div class="settings-group">
+      <h3><i class="fas fa-random"></i> Question Order</h3>
+      <div class="shuffle-buttons" id="shuffleButtonsContainer">
+        <button id="shuffleYesBtn" class="btn">⮂ Shuffle Questions</button>
+        <button id="shuffleNoBtn" class="btn primary">🗒 Original Order</button>
+      </div>
+      <p style="font-size: 0.7rem; color: #64748b; margin-top: 0.5rem;">Questions will be randomized before starting the quiz if shuffle is selected.</p>
     </div>
-    <div class="modal-buttons"><button id="cancelQuizOptBtn">Cancel</button></div>
+
+    <hr>
+    <div class="modal-buttons">
+      <button id="cancelQuizOptBtn" class="btn">Cancel</button>
+      <button id="startQuizBtn" class="primary"><i class="fas fa-play"></i> Start Quiz</button>
+    </div>
   </div>
 </div>
 
@@ -235,7 +331,6 @@ IDENT | List three types of SQL joins. | INNER JOIN,LEFT JOIN,RIGHT JOIN"></text
   let quizSession = null;
   let timerInterval = null;
   let pendingQuizReviewer = null;
-  let pendingShuffleChoice = null;
 
   function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 6); }
   function escapeHtml(str) { return String(str || '').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
@@ -250,6 +345,17 @@ IDENT | List three types of SQL joins. | INNER JOIN,LEFT JOIN,RIGHT JOIN"></text
       document.body.appendChild(overlay);
       overlay.querySelector('.c-yes').onclick = () => { overlay.remove(); resolve(true); };
       overlay.querySelector('.c-no').onclick = () => { overlay.remove(); resolve(false); };
+    });
+  }
+
+  function showAlert(message, title = 'Notice') {
+    return new Promise(resolve => {
+      const overlay = document.createElement('div');
+      overlay.className = 'modal-overlay active';
+      overlay.style.zIndex = '9999';
+      overlay.innerHTML = `<div class="modal-card"><h2><i class="fas fa-info-circle"></i> ${escapeHtml(title)}</h2><p>${message}</p><div class="modal-buttons"><button class="c-ok primary">OK</button></div></div>`;
+      document.body.appendChild(overlay);
+      overlay.querySelector('.c-ok').onclick = () => { overlay.remove(); resolve(); };
     });
   }
 
@@ -369,12 +475,25 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
     const rev = reviewers.find(r => r.id === id);
     if (!rev) return;
     if (!rev.quizQuestions.length) {
-      await showConfirm('This reviewer has no quiz questions! Add some via Edit.', 'No Questions');
+      await showAlert('This reviewer has no quiz questions! Add some via Edit.', 'No Questions');
       return;
     }
-    if (await showConfirm(`Ready for "<strong>${escapeHtml(rev.title)}</strong>" quiz?`, 'Start Quiz')) {
-      launchQuizOptions(id);
+    pendingQuizReviewer = rev;
+    // Reset UI selection for shuffle buttons to default (original order as primary)
+    const shuffleYesBtn = document.getElementById('shuffleYesBtn');
+    const shuffleNoBtn = document.getElementById('shuffleNoBtn');
+    if (shuffleYesBtn && shuffleNoBtn) {
+      shuffleYesBtn.classList.remove('primary');
+      shuffleNoBtn.classList.add('primary');
     }
+    // Reset timer visibility
+    const timerOnRadio = document.querySelector('input[name="timerOption"][value="on"]');
+    if (timerOnRadio) timerOnRadio.checked = true;
+    document.getElementById('timerDurationRow').style.display = 'flex';
+    document.getElementById('timerMinutes').value = 1;
+    document.getElementById('timerSeconds').value = 30;
+    
+    document.getElementById('quizOptionsModal').classList.add('active');
   }
 
   function openEditModal(id) {
@@ -390,7 +509,7 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
 
   function saveReviewerFromModal() {
     const title = document.getElementById('reviewerTitle').value.trim();
-    if (!title) { showConfirm('Title is required.', 'Error'); return; }
+    if (!title) { showAlert('Title is required.', 'Error'); return; }
     const rawText = document.getElementById('studyText').value;
     const rawQuiz = document.getElementById('quizRawData').value;
     const parsedQ = parseUnifiedQuestions(rawQuiz);
@@ -408,7 +527,6 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
     document.getElementById('reviewerModal').classList.remove('active');
   }
 
- 
   function startSlideshow(reviewerId) {
     const rev = reviewers.find(r => r.id === reviewerId);
     if (!rev) return;
@@ -464,41 +582,49 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
           const rid = activeSlideshow.reviewerId;
           overlay.remove();
           activeSlideshow = null;
-          launchQuizOptions(rid);
+          confirmQuizFromDashboard(rid);
         }
       };
     }
   }
 
-  function launchQuizOptions(reviewerId) {
-    const rev = reviewers.find(r => r.id === reviewerId);
-    if (!rev || !rev.quizQuestions.length) return;
-    pendingQuizReviewer = rev;
-    pendingShuffleChoice = null;
-    document.getElementById('quizOptionsModal').classList.add('active');
-  }
-
+  // New function to start quiz with current settings from modal
   function startQuizWithCurrentSettings() {
-    if (!pendingQuizReviewer || pendingShuffleChoice === null) {
-      showConfirm('Select shuffle option', 'Required');
+    if (!pendingQuizReviewer) {
+      showAlert('No reviewer selected.', 'Error');
       return;
     }
+    
+    // Get timer setting
     const enableTimer = document.querySelector('input[name="timerOption"]:checked').value === 'on';
     let timeLimitSec = null;
     if (enableTimer) {
       const mins = Math.max(0, parseInt(document.getElementById('timerMinutes').value) || 0);
       const secs = Math.max(0, Math.min(59, parseInt(document.getElementById('timerSeconds').value) || 0));
       timeLimitSec = mins * 60 + secs;
-      if (timeLimitSec < 5) { showConfirm('Timer at least 5 seconds', 'Invalid'); return; }
+      if (timeLimitSec < 5) {
+        showAlert('Timer must be at least 5 seconds.', 'Invalid Timer');
+        return;
+      }
     }
+    
+    // Get shuffle setting (based on which button has 'primary' class)
+    const shuffleYesBtn = document.getElementById('shuffleYesBtn');
+    const shuffleNoBtn = document.getElementById('shuffleNoBtn');
+    const shouldShuffle = shuffleYesBtn && shuffleYesBtn.classList.contains('primary');
+    
+    // Close settings modal
     document.getElementById('quizOptionsModal').classList.remove('active');
+    
+    // Prepare questions
     let questions = [...pendingQuizReviewer.quizQuestions];
-    if (pendingShuffleChoice) {
+    if (shouldShuffle) {
       for (let i = questions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [questions[i], questions[j]] = [questions[j], questions[i]];
       }
     }
+    
     quizSession = {
       questions,
       userAnswers: new Array(questions.length).fill(null),
@@ -518,7 +644,7 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
     overlay.className = 'slideshow-overlay';
     let html = `<div class="slideshow-header"><h3><i class="fas fa-clock"></i> Quiz ${quizSession.enableTimer ? '<span id="quizTimer">--:--</span>' : '<i class="fas fa-infinity"></i>'}</h3><button id="qzExitBtn" class="btn"><i class="fas fa-times"></i> Exit Quiz</button></div><div id="qzScroll" style="max-height:70vh;overflow-y:auto;">`;
     quizSession.questions.forEach((q, idx) => {
-      html += `<div class="slide-content"><strong><i class="fas fa-question-circle"></i> ${idx+1}. [${q.type}] ${escapeHtml(q.text)}</strong><div style="margin-top:0.8rem;">`;
+      html += `<div class="slide-content"><div class="quiz-question-text-only">${idx+1}. ${escapeHtml(q.text)}</div><div style="margin-top:0.8rem;">`;
       if (q.type === 'MCQ') {
         q.options.forEach((opt, oi) => {
           const letter = String.fromCharCode(65+oi);
@@ -527,7 +653,7 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
       } else if (q.type === 'FILL') {
         html += `<input type="text" id="fill_${idx}" class="fill-input" placeholder="Type your answer...">`;
       } else if (q.type === 'IDENT') {
-        html += `<div class="identification-box"><textarea id="ident_${idx}" rows="2" placeholder="Separate by commas (e.g., Atomicity, Consistency, Isolation)" style="width:100%;"></textarea><div class="id-prompt">Expected terms: ${q.expectedAnswers.join(', ')}</div></div>`;
+        html += `<div class="identification-box"><textarea id="ident_${idx}" rows="2" placeholder="Separate by commas (e.g., Atomicity, Consistency, Isolation)" style="width:100%;"></textarea></div>`;
       }
       html += `</div></div>`;
     });
@@ -545,20 +671,20 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
         });
       } else if (q.type === 'FILL') {
         const inp = document.getElementById(`fill_${idx}`);
-        inp.addEventListener('input', e => {
+        if (inp) inp.addEventListener('input', e => {
           quizSession.userRawAnswers[idx] = e.target.value;
           quizSession.userAnswers[idx] = e.target.value;
         });
       } else if (q.type === 'IDENT') {
         const ta = document.getElementById(`ident_${idx}`);
-        ta.addEventListener('input', e => {
+        if (ta) ta.addEventListener('input', e => {
           quizSession.userRawAnswers[idx] = e.target.value;
           quizSession.userAnswers[idx] = e.target.value;
         });
       }
     });
     overlay.querySelector('#qzExitBtn').addEventListener('click', async () => {
-      if (await showConfirm('Exit quiz?', 'Exit')) {
+      if (await showConfirm('Exit quiz? Progress will be lost.', 'Exit')) {
         if (timerInterval) clearInterval(timerInterval);
         quizSession = null;
         overlay.remove();
@@ -577,7 +703,7 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
       if (el) el.innerText = formatTime(remaining);
       if (remaining <= 0) {
         clearInterval(timerInterval);
-        showConfirm("Time's up! Submitting.", "Time's Up").then(evaluateUnifiedResults);
+        showAlert("Time's up! Submitting your quiz.", "Time's Up").then(evaluateUnifiedResults);
       }
     }, 500);
   }
@@ -610,7 +736,7 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
     let resultsHtml = `<div class="modal-card"><div style="text-align:center;"><i class="fas fa-chart-line"></i><h2>Quiz Results</h2><p>${correct}/${total} correct (${pct}%)</p></div><div style="max-height:60vh;overflow-y:auto;">`;
     results.forEach((res, idx) => {
       resultsHtml += `<div class="result-question-card ${res.isCorrect ? 'correct' : 'incorrect'}">
-        <div><strong>Q${idx+1} [${res.q.type}]</strong> ${escapeHtml(res.q.text)} ${res.isCorrect ? '✔' : '✘'}</div>
+        <div><strong>Q${idx+1}</strong> ${escapeHtml(res.q.text)} ${res.isCorrect ? '✔' : '✘'}</div>
         <div>Your answer: ${escapeHtml(res.userGiven || '(no answer)')}</div>
         <div class="result-answer-detail">${res.detail}</div>
       </div>`;
@@ -624,7 +750,6 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
     document.getElementById('closeDetailedResults')?.addEventListener('click', () => resModal.remove());
   }
 
- 
   function openExportModal() {
     const modal = document.getElementById('exportModal');
     const container = document.getElementById('exportReviewerList');
@@ -659,7 +784,7 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
     document.getElementById('closeExportModalBtn').onclick = () => modal.classList.remove('active');
   }
 
-  
+  // Event Listeners
   document.getElementById('createReviewerBtn').onclick = () => {
     document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus"></i> Create reviewer';
     ['reviewerTitle', 'studyText', 'quizRawData'].forEach(id => document.getElementById(id).value = '');
@@ -683,28 +808,45 @@ IDENT | List three SQL join types. | INNER JOIN,LEFT JOIN,RIGHT JOIN`;
             const r = obj.reviewer;
             reviewers.push({ id: genId(), title: r.title, studyRawText: r.studyRawText, quizQuestionsRaw: r.quizQuestionsRaw, quizQuestions: parseUnifiedQuestions(r.quizQuestionsRaw || ''), parsedPages: parsePagesFromRaw(r.studyRawText) });
             persist(); renderReviewerList();
-            showConfirm(`Imported: ${r.title}`, 'Success');
+            showAlert(`Imported: ${r.title}`, 'Success');
           } else if (obj.type === 'forgot_study_slideshow_bundle' && Array.isArray(obj.reviewers)) {
             for (const br of obj.reviewers) {
               reviewers.push({ id: genId(), title: br.title, studyRawText: br.studyRawText, quizQuestionsRaw: br.quizQuestionsRaw, quizQuestions: parseUnifiedQuestions(br.quizQuestionsRaw || ''), parsedPages: parsePagesFromRaw(br.studyRawText) });
             }
             persist(); renderReviewerList();
-            showConfirm(`Bundle imported: ${obj.reviewers.length} reviewers.`, 'Success');
-          } else showConfirm('Invalid format', 'Error');
-        } catch(e) { showConfirm('Corrupted file', 'Error'); }
+            showAlert(`Bundle imported: ${obj.reviewers.length} reviewers.`, 'Success');
+          } else showAlert('Invalid format', 'Error');
+        } catch(e) { showAlert('Corrupted file', 'Error'); }
       };
       reader.readAsText(file);
     };
     inp.click();
   };
-  document.getElementById('shuffleYesBtn').onclick = () => { pendingShuffleChoice = true; startQuizWithCurrentSettings(); };
-  document.getElementById('shuffleNoBtn').onclick = () => { pendingShuffleChoice = false; startQuizWithCurrentSettings(); };
-  document.getElementById('cancelQuizOptBtn').onclick = () => document.getElementById('quizOptionsModal').classList.remove('active');
+  
+  // Shuffle buttons toggle style
+  document.getElementById('shuffleYesBtn').onclick = () => {
+    document.getElementById('shuffleYesBtn').classList.add('primary');
+    document.getElementById('shuffleNoBtn').classList.remove('primary');
+  };
+  document.getElementById('shuffleNoBtn').onclick = () => {
+    document.getElementById('shuffleNoBtn').classList.add('primary');
+    document.getElementById('shuffleYesBtn').classList.remove('primary');
+  };
+  
+  // Start quiz button
+  document.getElementById('startQuizBtn').onclick = () => { startQuizWithCurrentSettings(); };
+  document.getElementById('cancelQuizOptBtn').onclick = () => {
+    document.getElementById('quizOptionsModal').classList.remove('active');
+    pendingQuizReviewer = null;
+  };
+  
   document.querySelectorAll('input[name="timerOption"]').forEach(radio => {
     radio.addEventListener('change', () => {
-      document.getElementById('timerDurationRow').style.display = document.querySelector('input[name="timerOption"]:checked').value === 'on' ? 'flex' : 'none';
+      const durationRow = document.getElementById('timerDurationRow');
+      if (durationRow) durationRow.style.display = document.querySelector('input[name="timerOption"]:checked').value === 'on' ? 'flex' : 'none';
     });
   });
+  
   loadReviewers();
 </script>
 </body>

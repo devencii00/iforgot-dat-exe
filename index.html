@@ -566,7 +566,25 @@ What ensures all or nothing execution? | Atomicity | Consistency | Isolation | D
     attachSlideEvents(overlay, pages.length);
   }
   function attachSlideEvents(overlay, totalPages) { /* placeholder to avoid var undefined */ 
-    overlay.querySelector('#ssExitBtn')?.addEventListener('click', async () => { if(await showConfirm('Exit?','Exit Study')) overlay.remove(), activeSlideshow=null; });
+    overlay.querySelector('#ssExitBtn')?.addEventListener('click', async () => {
+  if(!(await showConfirm('Exit and return to dashboard?', 'Exit Study'))) return;
+
+  // kill slideshow state
+  activeSlideshow = null;
+
+  // remove ALL possible study/quiz overlays (hard reset)
+  document.querySelectorAll('.slideshow-overlay, #quizOverlay').forEach(el => el.remove());
+
+  // clear timers if any are running
+  if (typeof timerInterval !== 'undefined' && timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  quizSession = null;
+  pendingQuizReviewer = null;
+  pendingShuffleChoice = null;
+});
     overlay.querySelector('#ssPrevBtn')?.addEventListener('click',()=>{if(activeSlideshow.currentIndex>0)activeSlideshow.currentIndex--,buildSlideshowOverlay();});
     overlay.querySelector('#ssNextBtn')?.addEventListener('click',()=>{if(activeSlideshow.currentIndex<totalPages-1)activeSlideshow.currentIndex++,buildSlideshowOverlay();});
     overlay.querySelectorAll('.dot[data-i]').forEach(d=>d.addEventListener('click',()=>{activeSlideshow.currentIndex=parseInt(d.dataset.i);buildSlideshowOverlay();}));
